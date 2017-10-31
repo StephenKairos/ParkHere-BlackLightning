@@ -12,15 +12,23 @@ import android.widget.EditText;
 
 public class RegisterActivity extends AppCompatActivity {
     Button bRegister;
-    EditText nameText;
+    EditText firstNameText;
+    EditText lastNameText;
     EditText userName;
-    EditText email;
+    EditText emailText;
     EditText password;
     EditText reEnterPassword;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_register);
+        bRegister = (Button) findViewById(R.id.buttonRegister);
+        firstNameText = (EditText) findViewById(R.id.firstNameText);
+        lastNameText = (EditText) findViewById(R.id.lastNameText);
+        userName = (EditText) findViewById(R.id.userName);
+        emailText = (EditText) findViewById(R.id.emailText);
+        password = (EditText) findViewById(R.id.password);
+        reEnterPassword = (EditText) findViewById(R.id.reEnterPassword);
     }
 
 }

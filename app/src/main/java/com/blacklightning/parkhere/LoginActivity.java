@@ -3,6 +3,7 @@ package com.blacklightning.parkhere;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button bLogin;
     AutoCompleteTextView etUserName;
     EditText etPassword;
-
+    Button bRegisterButton;
 
     @Override
     protected  void onCreate(Bundle savedInstanceState){
@@ -52,15 +53,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etUserName = (AutoCompleteTextView) findViewById(R.id.email);
         etPassword = (EditText) findViewById(R.id.password);
         bLogin = (Button) findViewById(R.id.email_sign_in_button);
-
+        bRegisterButton = findViewById(R.id.buttonRegister);
         bLogin.setOnClickListener(this);
-
+        bRegisterButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.email_sign_in_button){
 
+        }
+
+        if(view.getId() == R.id.buttonRegister){
+            //startActivity(new Intent(this, RegisterActivity.class));
         }
     }
 }
