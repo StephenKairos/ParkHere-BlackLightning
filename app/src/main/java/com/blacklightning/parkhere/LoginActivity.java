@@ -38,7 +38,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     Button bLogin;
     AutoCompleteTextView etUserName;
@@ -53,20 +53,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etUserName = (AutoCompleteTextView) findViewById(R.id.email);
         etPassword = (EditText) findViewById(R.id.password);
         bLogin = (Button) findViewById(R.id.email_sign_in_button);
-        bRegisterButton = findViewById(R.id.buttonRegister);
-        bLogin.setOnClickListener(this);
-        bRegisterButton.setOnClickListener(this);
+        bRegisterButton = (Button) findViewById(R.id.buttonRegister);
+
+        bRegisterButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                LoginActivity.this.startActivity(registerIntent);
+            }
+        });
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view.getId() == R.id.email_sign_in_button){
 
-        }
-
-        if(view.getId() == R.id.buttonRegister){
-            //startActivity(new Intent(this, RegisterActivity.class));
-        }
-    }
 }
-
