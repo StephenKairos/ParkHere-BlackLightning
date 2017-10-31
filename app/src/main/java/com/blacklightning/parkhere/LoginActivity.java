@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,11 +57,19 @@ public class LoginActivity extends AppCompatActivity {
         bRegisterButton = (Button) findViewById(R.id.buttonRegister);
 
         bRegisterButton.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View view) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
+            }
+        });
+        
+        bLogin.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent mapsIntent = new Intent(LoginActivity.this, MapsActivity.class);
+                LoginActivity.this.startActivity(mapsIntent);
             }
         });
     }
