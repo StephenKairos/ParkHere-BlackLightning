@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
-        
+
         bLogin.setOnClickListener(new View.OnClickListener(){
 
             @Override
