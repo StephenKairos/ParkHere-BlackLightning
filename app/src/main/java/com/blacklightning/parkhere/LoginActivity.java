@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Send paassword reset to email
     private  void resetPass(){
-        String emailCheck = email.getText().toString().trim();
+        String emailCheck = email.getText().toString();
 
         if(emailCheck.isEmpty()){
             Toast.makeText(this, "Don't leave Email empty!",Toast.LENGTH_SHORT).show();
@@ -87,8 +87,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // check login info
     private void logInCheck(){
-        String emailCheck = email.getText().toString().trim();
-        String passCheck = etPassword.getText().toString().trim();
+        String emailCheck = email.getText().toString();
+        String passCheck = etPassword.getText().toString();
 
         if(TextUtils.isEmpty(emailCheck) || TextUtils.isEmpty(passCheck)){
             Toast.makeText(this, "Don't leave any field empty!",Toast.LENGTH_SHORT).show();
@@ -96,14 +96,17 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         authentication.signInWithEmailAndPassword(emailCheck, passCheck).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                //Toast.makeText(LoginActivity.this, emailCheck ,Toast.LENGTH_SHORT).show();
+
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "createUserWithEmail:success");
-                    //FirebaseUser user = mAuth.getCurrentUser();
-                    Intent profileIntent = new Intent(LoginActivity.this, ProfileActivity.class);
-                    startActivity(profileIntent);
+                    Toast.makeText(LoginActivity.this, "Success!",Toast.LENGTH_SHORT).show();
+                    Intent registerIntent = new Intent(LoginActivity.this, ProfileActivity.class);
+                    startActivity(registerIntent);
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -111,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 // ...
+
             }
         });
     }

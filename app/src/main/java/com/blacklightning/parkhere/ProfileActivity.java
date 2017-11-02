@@ -31,11 +31,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_profile);
 
-         firebaseAuth = FirebaseAuth.getInstance();
-         if(firebaseAuth.getCurrentUser()==null){
-             finish();
-             startActivity(new Intent(this, LoginActivity.class));
-         }
+//         firebaseAuth = FirebaseAuth.getInstance();
+//         if(firebaseAuth.getCurrentUser()==null){
+//             finish();
+//             startActivity(new Intent(this, LoginActivity.class));
+//         }
+
          bViewParkingSpots = (Button) findViewById(R.id.viewYourParkingSpots);
          bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);
          bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
@@ -47,24 +48,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-         if(view == bLogOut){
-             firebaseAuth.signOut();
-             finish();
-             startActivity(new Intent(this, LoginActivity.class));
-         }
-         if(view == bViewParkingSpots){
-
-        }
-        if(view == bBookParkingSpots){
-
-        }
-        if(view == bCreateParkingSpots){
-            startActivity(new Intent(this, CreateParkingSpot.class));
-        }
-        if(view == bEditProfile){
-
-        }
+//         if(view == bLogOut){
+//             firebaseAuth.signOut();
+//             finish();
+//             startActivity(new Intent(this, LoginActivity.class));
+//         }
+//         if(view == bViewParkingSpots){
+//
+//        }
+//        if(view == bBookParkingSpots){
+//
+//        }
+//        if(view == bCreateParkingSpots){
+//            startActivity(new Intent(this, CreateParkingSpot.class));
+//        }
+//        if(view == bEditProfile){
+//
+//        }
     }
+
+
 }
 
 
