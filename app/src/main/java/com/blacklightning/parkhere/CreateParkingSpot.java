@@ -37,7 +37,7 @@ public class CreateParkingSpot extends AppCompatActivity {
         bCreate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent createParkingIntent = new Intent(CreateParkingSpot.this, RegisterActivity.class);
+                Intent createParkingIntent = new Intent(CreateParkingSpot.this, ProfileActivity.class);
                 CreateParkingSpot.this.startActivity(createParkingIntent);
             }
         }

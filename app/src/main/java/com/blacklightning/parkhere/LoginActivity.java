@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         bLogin.setOnClickListener(new View.OnClickListener(){
+
             public void attemptLogin(){
                 String email,password;
                 email = etUserName.getText().toString();
@@ -105,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
+                Intent loginIntent = new Intent(LoginActivity.this, ProfileActivity.class);
+               LoginActivity.this.startActivity(loginIntent);
 
             }
         });
