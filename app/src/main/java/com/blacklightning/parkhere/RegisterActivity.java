@@ -29,6 +29,9 @@ public class RegisterActivity extends AppCompatActivity {
         emailText = (EditText) findViewById(R.id.emailText);
         password = (EditText) findViewById(R.id.password);
         reEnterPassword = (EditText) findViewById(R.id.reEnterPassword);
+
+
+
     }
 
 }
