@@ -114,6 +114,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
              }
          });
 
+         mDB.child("users").child(currentUser.getUid()).child("phoneNumber").addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(DataSnapshot snapshot) {
+                 phoneNumber = snapshot.getValue().toString();
+                 emailText.setText("Phone Number: " + phoneNumber);
+             }
+
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
+
+             }
+         });
+
          bViewParkingSpots = (Button) findViewById(R.id.viewYourParkingSpots);
          bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);
          bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
