@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         lastNameText = (EditText) findViewById(R.id.lastNameText);
         userName = (EditText) findViewById(R.id.userName);
         emailText = (EditText) findViewById(R.id.emailText);
-        password = (EditText) findViewById(R.id.password);
+        password = (EditText) findViewById(R.id.passwordEditText);
         reEnterPassword = (EditText) findViewById(R.id.reEnterPassword);
 
         buttonRegister.setOnClickListener(this);
@@ -47,15 +47,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
     private void registerUser(){
-        String email = emailText.toString().trim();
-        String pw = password.toString().trim();
+        String email = emailText.getText().toString().trim();
+        String pw = password.getText().toString().trim();
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "email is empty", Toast.LENGTH_LONG).show();
-
+            return;
         }
         if(TextUtils.isEmpty(pw)){
             Toast.makeText(this, "pw is empty", Toast.LENGTH_LONG).show();
-
+            return;
         }
         progressDialog.setMessage("Registering...");
         progressDialog.show();
@@ -65,11 +65,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "reg. succ", Toast.LENGTH_LONG).show();
-
+                            //return;
                         }
                         else{
                             Toast.makeText(RegisterActivity.this, "reg. fail", Toast.LENGTH_LONG).show();
-
+                            //return;
                         }
                     }
                 });
@@ -78,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if(view == this.buttonRegister){
             registerUser();
-
         }
     }
 }
