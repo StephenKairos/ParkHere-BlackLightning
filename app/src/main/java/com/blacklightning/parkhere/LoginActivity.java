@@ -59,31 +59,29 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(String... params) {
 
-                final Semaphore mSemaphore = new Semaphore(0);
+                // Use semaphore lock to prevent lock user.
+                final Semaphore lock = new Semaphore(0);
                 mAuth.signInWithEmailAndPassword(params[0], params[1])
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            public void onComplete(@NonNull Task<AuthResult> loginTask) {
+                                Log.d(TAG, "signInWithEmail:onComplete:" + loginTask.isSuccessful());
 
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Log.w(TAG, "signInWithEmail:failed", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Incorrect email or password. Please try again.",
+
+                                if (!loginTask.isSuccessful()) {
+                                    Log.w(TAG, "signInWithEmail:failed", loginTask.getException());
+                                    Toast.makeText(LoginActivity.this, "Wrong email or password.",
                                             Toast.LENGTH_SHORT).show();
                                 }
-                                mSemaphore.release();
+                                lock.release();
 
                             }
                         });
                 try {
-                    mSemaphore.acquire();
-                } catch (InterruptedException e) {
+                    lock.acquire();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return null;
             }
         }
