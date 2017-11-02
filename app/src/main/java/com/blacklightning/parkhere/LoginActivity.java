@@ -91,8 +91,9 @@ public class LoginActivity extends AppCompatActivity {
 
         bLogin.setOnClickListener(new View.OnClickListener(){
             public void attemptLogin(){
-                String email = etUserName.getText().toString();
-                String password = etPassword.getText().toString();
+                String email,password;
+                email = etUserName.getText().toString();
+                password = etPassword.getText().toString();
 
                 if(email.isEmpty() || password.isEmpty()){
                     return;
