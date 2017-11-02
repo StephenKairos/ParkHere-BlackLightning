@@ -7,40 +7,65 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * Created by Jason Liu on 11/1/2017.
  */
 
-public class ProfileActivity extends AppCompatActivity{
-        Button bViewParkingSpots;
-        Button bBookParkingSpots;
-        Button bCreateParkingSpots;
-        Button bEditProfile;
-        EditText firstNameText;
-        EditText lastNameText;
-        EditText userName;
-        EditText emailText;
-        EditText password;
-        EditText reEnterPassword;
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
+    Button bViewParkingSpots;
+    Button bBookParkingSpots;
+    Button bCreateParkingSpots;
+    Button bEditProfile;
+    Button bLogOut;
+    EditText firstNameText;
+    EditText lastNameText;
+    EditText userName;
+    EditText emailText;
+    EditText password;
+    EditText reEnterPassword;
+    private FirebaseAuth firebaseAuth;
 
-        protected void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_profile);
-            bViewParkingSpots = (Button) findViewById(R.id.viewYourParkingSpots);
-            bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);
-            bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
-            bEditProfile = (Button) findViewById(R.id.editProfile);
+     protected void onCreate(Bundle savedInstanceState){
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_profile);
 
-            bCreateParkingSpots.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent profileIntent = new Intent(ProfileActivity.this, CreateParkingSpot.class);
-                    ProfileActivity.this.startActivity(profileIntent);
-                }
-            });
+         firebaseAuth = FirebaseAuth.getInstance();
+         if(firebaseAuth.getCurrentUser()==null){
+             finish();
+             startActivity(new Intent(this, LoginActivity.class));
+         }
+         bViewParkingSpots = (Button) findViewById(R.id.viewYourParkingSpots);
+         bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);
+         bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
+         bEditProfile = (Button) findViewById(R.id.editProfile);
+         bLogOut = (Button) findViewById(R.id.logOut);
+         bCreateParkingSpots.setOnClickListener(this);
+         bLogOut.setOnClickListener(this);
+     }
+
+    @Override
+    public void onClick(View view) {
+         if(view == bLogOut){
+             firebaseAuth.signOut();
+             finish();
+             startActivity(new Intent(this, LoginActivity.class));
+         }
+         if(view == bViewParkingSpots){
+
         }
+        if(view == bBookParkingSpots){
 
+        }
+        if(view == bCreateParkingSpots){
+            startActivity(new Intent(this, CreateParkingSpot.class));
+        }
+        if(view == bEditProfile){
+
+        }
     }
+}
 
 
 

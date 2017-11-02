@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -92,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = etUserName.getText().toString();
                 String password = etPassword.getText().toString();
 
-                if(email.isEmpty() || password.isEmpty()){
+                if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                     return;
                 }
 
