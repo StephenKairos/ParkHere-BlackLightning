@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -89,8 +90,9 @@ public class LoginActivity extends AppCompatActivity {
         String emailCheck = email.getText().toString().trim();
         String passCheck = etPassword.getText().toString().trim();
 
-        if(emailCheck.isEmpty() || passCheck.isEmpty()){
+        if(TextUtils.isEmpty(emailCheck) || TextUtils.isEmpty(passCheck)){
             Toast.makeText(this, "Don't leave any field empty!",Toast.LENGTH_SHORT).show();
+            return;
         }
 
         authentication.signInWithEmailAndPassword(emailCheck, passCheck).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -98,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
+                    //Log.d(TAG, "createUserWithEmail:success");
+                    //FirebaseUser user = mAuth.getCurrentUser();
                     Intent profileIntent = new Intent(LoginActivity.this, ProfileActivity.class);
                     startActivity(profileIntent);
                 } else {
