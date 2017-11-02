@@ -10,7 +10,8 @@
         android:layout_height="507dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="4dp">
+        tools:layout_editor_absoluteY="4dp"
+        tools:ignore="MissingConstraints">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="User Name" />
+                    android:hint="User Name" />
 
                 <EditText
                     android:id="@+id/firstName"
@@ -42,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="First Name" />
+                    android:hint="First Name" />
 
                 <EditText
                     android:id="@+id/lastName"
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Last Name" />
+                    android:hint="Last Name" />
 
                 <EditText
                     android:id="@+id/emailAddress"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Email Address" />
+                    android:hint="Email Address" />
 
                 <EditText
                     android:id="@+id/paymentMethod"
@@ -66,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Payment Method" />
+                    android:hint="Payment Method" />
 
                 <EditText
                     android:id="@+id/phoneNumber"
@@ -74,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Phone Number" />
+                    android:hint="Phone Number" />
 
                 <EditText
                     android:id="@+id/dateOfBirthday"
@@ -82,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Date of Birth" />
+                    android:hint="Date of Birth" />
 
                 <Button
                     android:id="@+id/bookParkingSpots"

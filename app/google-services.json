@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1016820310535-0gr0ftrugo9hmolfo51q3ecmd8hj7qhp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blacklightning.parkhere",
+            "certificate_hash": "0d019064f7c1cd77b1d9f5fdd7e58cc03fab1bfa"
+          }
+        },
+        {
+          "client_id": "1016820310535-e8pvn1di0rvk3ki2eusv4d6qj1umr8vj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blacklightning.parkhere",
+            "certificate_hash": "41db0cabd4663b4776f6c05601ba853f07af65eb"
+          }
+        },
+        {
           "client_id": "1016820310535-cqnu1hd2shblvusaaqb8go1tts0c66vp.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +45,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016820310535-cqnu1hd2shblvusaaqb8go1tts0c66vp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
