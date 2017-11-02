@@ -58,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "pw is empty", Toast.LENGTH_LONG).show();
             return;
         }
+
         progressDialog.setMessage("Registering...");
         progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,pw)
