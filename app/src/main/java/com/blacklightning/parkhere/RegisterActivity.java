@@ -1,6 +1,7 @@
 package com.blacklightning.parkhere;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "pw is empty", Toast.LENGTH_LONG).show();
             return;
         }
+
         progressDialog.setMessage("Registering...");
         progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,pw)
@@ -78,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if(view == this.buttonRegister){
             registerUser();
+            startActivity(new Intent(this, LoginActivity.class));
         }
     }
 }

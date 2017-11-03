@@ -29,7 +29,7 @@
                     android:text="Profile"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-                <EditText
+                <TextView
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                     android:inputType="textPersonName"
                     android:hint="User Name" />
 
-                <EditText
+                <TextView
                     android:id="@+id/firstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                     android:inputType="textPersonName"
                     android:hint="First Name" />
 
-                <EditText
+                <TextView
                     android:id="@+id/lastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                     android:inputType="textPersonName"
                     android:hint="Last Name" />
 
-                <EditText
+                <TextView
                     android:id="@+id/emailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -61,29 +61,13 @@
                     android:inputType="textPersonName"
                     android:hint="Email Address" />
 
-                <EditText
-                    android:id="@+id/paymentMethod"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Payment Method" />
-
-                <EditText
+                <TextView
                     android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:hint="Phone Number" />
-
-                <EditText
-                    android:id="@+id/dateOfBirthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Date of Birth" />
 
                 <Button
                     android:id="@+id/bookParkingSpots"
