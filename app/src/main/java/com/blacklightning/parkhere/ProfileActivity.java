@@ -3,7 +3,6 @@ package com.blacklightning.parkhere;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by Jason Liu on 11/1/2017.
  */
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class ProfileActivity extends AppCompatActivity {
     Button bViewParkingSpots;
     Button bBookParkingSpots;
     Button bCreateParkingSpots;
@@ -136,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
          bEditProfile.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 Intent editPro5Intent = new Intent(ProfileActivity.this, UpadteProfileActivity.class);
+                 Intent editPro5Intent = new Intent(ProfileActivity.this, UpadateProfileActivity.class);
                  startActivity(editPro5Intent);
              }
          });
