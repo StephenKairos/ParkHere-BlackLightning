@@ -135,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
          bEditProfile.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 Intent editPro5Intent = new Intent(ProfileActivity.this, UpadateProfileActivity.class);
+                 Intent editPro5Intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
                  startActivity(editPro5Intent);
              }
          });

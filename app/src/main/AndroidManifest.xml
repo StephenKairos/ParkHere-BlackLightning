@@ -45,7 +45,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".UpadateProfileActivity"></activity>
+        <activity android:name=".UpdateProfileActivity"></activity>
     </application>
 
 </manifest>
