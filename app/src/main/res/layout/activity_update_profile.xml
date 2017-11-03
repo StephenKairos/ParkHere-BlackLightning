@@ -11,26 +11,31 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:id="@+id/userNameText"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:id="@+id/firstNameText"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:id="@+id/lastNameText"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:id="@+id/emailText"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:id="@+id/phoneText"/>
 
@@ -42,9 +47,11 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmPassword"
-        android:enabled="false"
 
+        android:id="@+id/confirmPassword"
+        android:maxLines="1"
+        android:enabled="false"
+        android:inputType="textPassword"
         android:hint="Enter Password to Confirm"/>
     <Button
         android:layout_width="match_parent"

@@ -8,19 +8,22 @@
         android:id="@+id/firstNameText"
         android:hint="First Name"
         android:layout_width="match_parent"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         />
     <EditText
         android:id="@+id/lastNameText"
         android:hint="Last Name"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         />
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:hint="User Name"
         android:id="@+id/userName"/>
@@ -28,6 +31,7 @@
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:hint="Email Addresss"
         android:id="@+id/emailText"/>
@@ -36,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:maxLines="1"
         android:id="@+id/passwordEditText"
         android:hint="Password"/>
     <EditText
@@ -43,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:maxLines="1"
         android:id="@+id/reEnterPassword"
         android:hint="Confirm Password"/>
     <Button
