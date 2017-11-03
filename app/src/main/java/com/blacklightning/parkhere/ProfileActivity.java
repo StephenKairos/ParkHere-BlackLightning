@@ -118,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
              @Override
              public void onDataChange(DataSnapshot snapshot) {
                  phoneNumber = snapshot.getValue().toString();
-                 emailText.setText("Phone Number: " + phoneNumber);
+                 phoneText.setText("Phone Number: " + phoneNumber);
              }
 
              @Override
@@ -132,48 +132,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
          bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
          bEditProfile = (Button) findViewById(R.id.editProfile);
          bLogOut = (Button) findViewById(R.id.logOut);
-         bCreateParkingSpots.setOnClickListener(this);
-         bLogOut.setOnClickListener(this);
+
+         bEditProfile.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent editPro5Intent = new Intent(ProfileActivity.this, UpadteProfileActivity.class);
+                 startActivity(editPro5Intent);
+             }
+         });
      }
 
-    @Override
-    public void onClick(View view) {
-//         if(view == bLogOut){
-//             firebaseAuth.signOut();
-//             finish();
-//             startActivity(new Intent(this, LoginActivity.class));
-//         }
-//         if(view == bViewParkingSpots){
-//
-//        }
-//        if(view == bBookParkingSpots){
-//
-//        }
-//        if(view == bCreateParkingSpots){
-//            startActivity(new Intent(this, CreateParkingSpot.class));
-//        }
-//        if(view == bEditProfile){
-//
-//        }
-    }
 
-//    public String queryDB(String fieldType){
-//        queryResult = "";
-//        mDB.child("users").child(currentUser.getUid()).child(fieldType).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                queryResult = snapshot.getValue().toString();
-//               Log.d("Returned query: ", queryResult);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        Log.d("Returned query: ", "print you fucker: " + queryResult);
-//        return queryResult;
-//    }
 
 }
 
