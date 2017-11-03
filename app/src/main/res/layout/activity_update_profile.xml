@@ -34,7 +34,24 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/phoneText"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelButton"
+        android:text="Cancel"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirmPassword"
+        android:enabled="false"
 
+        android:hint="Enter Password to Confirm"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Confirm"
+        android:id="@+id/Confirm"/>
 
 
 </LinearLayout>
