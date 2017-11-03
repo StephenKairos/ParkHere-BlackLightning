@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +14,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.*;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by franc on Oct/31/2017.
@@ -28,12 +30,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText emailText;
     EditText password;
     EditText reEnterPassword;
+
+    // Firebase References
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference fBase;
+    private FirebaseUser currentUser;
+
     private ProgressDialog progressDialog;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // Establish Database and User
+        fBase = FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("User before: ", currentUser.getUid());
+
         buttonRegister = (Button) findViewById(R.id.bRegister);
         firstNameText = (EditText) findViewById(R.id.firstNameText);
         lastNameText = (EditText) findViewById(R.id.lastNameText);
@@ -68,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "reg. succ", Toast.LENGTH_LONG).show();
                             //return;
+                            createProfile();
                         }
                         else{
                             Toast.makeText(RegisterActivity.this, "reg. fail", Toast.LENGTH_LONG).show();
@@ -82,6 +96,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             registerUser();
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    public void createProfile() {
+        //Reconfirm User
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("User before: ", currentUser.getUid().toString());
+
+        //Registration successful, let's add the user's info into the database
     }
 }
 
