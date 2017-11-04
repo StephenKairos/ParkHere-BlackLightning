@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     // Firebase References
     private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference fBase;
     private FirebaseUser currentUser;
 
@@ -44,8 +46,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // Establish Database and User
         fBase = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        Log.d("User before: ", currentUser.getUid());
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
 
         buttonRegister = (Button) findViewById(R.id.bRegister);
         firstNameText = (EditText) findViewById(R.id.firstNameText);
@@ -57,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         buttonRegister.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
-        firebaseAuth = FirebaseAuth.getInstance();
 
     }
     private void registerUser(){
@@ -72,16 +73,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("Auth State", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("Auth State", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+        firebaseAuth.addAuthStateListener(authListener);
+
         progressDialog.setMessage("Registering...");
         progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,pw)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "reg. succ", Toast.LENGTH_LONG).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Registered.", Toast.LENGTH_LONG).show();
                             //return;
+                            currentUser = firebaseAuth.getCurrentUser();
+                            Log.d("User after: ", currentUser.getUid());
                             createProfile();
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         }
                         else{
                             Toast.makeText(RegisterActivity.this, "reg. fail", Toast.LENGTH_LONG).show();
@@ -89,21 +109,32 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 });
+        currentUser = firebaseAuth.getCurrentUser();
+
+        if(currentUser != null) {
+            Log.d("User registered: ", currentUser.getUid());
+        } else {
+            Log.d("Auth status:", "user is null");
+        }
     }
     @Override
     public void onClick(View view) {
         if(view == this.buttonRegister){
             registerUser();
-            startActivity(new Intent(this, LoginActivity.class));
+            Log.d("Skipped creation:", "dammit");
         }
     }
 
     public void createProfile() {
         //Reconfirm User
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        Log.d("User before: ", currentUser.getUid().toString());
-
+        Log.d("Logged in User is", currentUser.getUid());
         //Registration successful, let's add the user's info into the database
+
+        fBase.child("users").child(currentUser.getUid()).child("userName").setValue(userName.getText().toString());
+        fBase.child("users").child(currentUser.getUid()).child("emailText").setValue(emailText.getText().toString());
+        fBase.child("users").child(currentUser.getUid()).child("firstNameText").setValue(firstNameText.getText().toString());
+        fBase.child("users").child(currentUser.getUid()).child("lastNameText").setValue(lastNameText.getText().toString());
+        fBase.child("users").child(currentUser.getUid()).child("phoneNumber").setValue(123456789);
     }
 }
 

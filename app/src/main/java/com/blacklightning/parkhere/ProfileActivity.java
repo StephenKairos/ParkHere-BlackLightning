@@ -61,70 +61,74 @@ public class ProfileActivity extends AppCompatActivity {
 //         Log.d("Check after query: ", "test string");
 //         userNameText.setText("User: " + userName);
 
-         mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(DataSnapshot snapshot) {
-                 userName = snapshot.getValue().toString();
-                 userNameText.setText("User: " + userName);
-             }
+         if(currentUser != null) {
 
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
+             mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     userName = snapshot.getValue().toString();
+                     userNameText.setText("User: " + userName);
+                 }
 
-             }
-         });
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
 
-         mDB.child("users").child(currentUser.getUid()).child("firstNameText").addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(DataSnapshot snapshot) {
-                 firstName = snapshot.getValue().toString();
-                 firstNameText.setText("First Name: " + firstName);
-             }
+                 }
+             });
 
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
+             mDB.child("users").child(currentUser.getUid()).child("firstNameText").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     firstName = snapshot.getValue().toString();
+                     firstNameText.setText("First Name: " + firstName);
+                 }
 
-             }
-         });
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
 
-         mDB.child("users").child(currentUser.getUid()).child("lastNameText").addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(DataSnapshot snapshot) {
-                 lastName = snapshot.getValue().toString();
-                 lastNameText.setText("Last Name: " + lastName);
-             }
+                 }
+             });
 
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
+             mDB.child("users").child(currentUser.getUid()).child("lastNameText").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     lastName = snapshot.getValue().toString();
+                     lastNameText.setText("Last Name: " + lastName);
+                 }
 
-             }
-         });
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
 
-         mDB.child("users").child(currentUser.getUid()).child("emailText").addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(DataSnapshot snapshot) {
-                 email = snapshot.getValue().toString();
-                 emailText.setText("Email Address: " + email);
-             }
+                 }
+             });
 
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
+             mDB.child("users").child(currentUser.getUid()).child("emailText").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     email = snapshot.getValue().toString();
+                     emailText.setText("Email Address: " + email);
+                 }
 
-             }
-         });
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
 
-         mDB.child("users").child(currentUser.getUid()).child("phoneNumber").addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(DataSnapshot snapshot) {
-                 phoneNumber = snapshot.getValue().toString();
-                 phoneText.setText("Phone Number: " + phoneNumber);
-             }
+                 }
+             });
 
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
+             mDB.child("users").child(currentUser.getUid()).child("phoneNumber").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     phoneNumber = snapshot.getValue().toString();
+                     phoneText.setText("Phone Number: " + phoneNumber);
+                 }
 
-             }
-         });
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
+
+                 }
+             });
+
+         }
 
          bViewParkingSpots = (Button) findViewById(R.id.viewYourParkingSpots);
          bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);

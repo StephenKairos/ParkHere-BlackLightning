@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     Button bRegisterButton;
     Button bResetButton;
     FirebaseAuth authentication;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -70,6 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
+
+        currentUser = authentication.getCurrentUser();
+        if(currentUser != null) {
+            Log.d("Current Login: ", currentUser.getUid());
+        }
     }
 
     // Send paassword reset to email
@@ -105,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "createUserWithEmail:success");
                     Toast.makeText(LoginActivity.this, "Success!",Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Logged In!");
                     Intent registerIntent = new Intent(LoginActivity.this, ProfileActivity.class);
                     startActivity(registerIntent);
                 } else {

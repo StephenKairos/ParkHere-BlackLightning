@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1016820310535-f86rq1t428alnmrg33tv7vpcmkk3ifhb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blacklightning.parkhere",
+            "certificate_hash": "0435d5b40d1c843b60d336420bb784a63ddf316a"
+          }
+        },
+        {
           "client_id": "1016820310535-0gr0ftrugo9hmolfo51q3ecmd8hj7qhp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
