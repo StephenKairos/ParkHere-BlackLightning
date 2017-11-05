@@ -8,6 +8,7 @@
         android:id="@+id/firstNameText"
         android:hint="First Name"
         android:layout_width="match_parent"
+        android:inputType="textPersonName"
         android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
@@ -16,6 +17,7 @@
         android:id="@+id/lastNameText"
         android:hint="Last Name"
         android:maxLines="1"
+        android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
@@ -27,6 +29,14 @@
         android:layout_marginBottom="10dp"
         android:hint="User Name"
         android:id="@+id/userName"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_marginBottom="10dp"
+        android:hint="Phone Number"
+        android:inputType="number"
+        android:id="@+id/phoneNumber"/>
     <EditText
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
