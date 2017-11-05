@@ -54,12 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
          emailText = (TextView) findViewById(R.id.emailAddress);
          phoneText = (TextView) findViewById(R.id.phoneNumber);
 
-         // Log.d("TEST TAG", "created user with id: " + currentUser.getUid());
 
-         // Retrieve Username
-//         userName = queryDB("userName");
-//         Log.d("Check after query: ", "test string");
-//         userNameText.setText("User: " + userName);
 
          if(currentUser != null) {
 
@@ -143,6 +138,9 @@ public class ProfileActivity extends AppCompatActivity {
                  startActivity(editPro5Intent);
              }
          });
+
+
+
      }
 
 
