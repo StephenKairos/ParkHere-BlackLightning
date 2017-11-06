@@ -28,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText firstNameText;
     EditText lastNameText;
     EditText userName;
+    EditText phoneNumber;
     EditText emailText;
     EditText password;
     EditText reEnterPassword;
@@ -53,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         firstNameText = (EditText) findViewById(R.id.firstNameText);
         lastNameText = (EditText) findViewById(R.id.lastNameText);
         userName = (EditText) findViewById(R.id.userName);
+        phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         emailText = (EditText) findViewById(R.id.emailText);
         password = (EditText) findViewById(R.id.passwordEditText);
         reEnterPassword = (EditText) findViewById(R.id.reEnterPassword);
@@ -62,17 +64,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
     private void registerUser(){
+
+        if(!checkFields()){
+            return;
+        }
         String email = emailText.getText().toString().trim();
         String pw = password.getText().toString().trim();
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this, "email is empty", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if(TextUtils.isEmpty(pw)){
-            Toast.makeText(this, "pw is empty", Toast.LENGTH_LONG).show();
-            return;
-        }
-
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -117,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Log.d("Auth status:", "user is null");
         }
     }
+
     @Override
     public void onClick(View view) {
         if(view == this.buttonRegister){
@@ -134,7 +132,53 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         fBase.child("users").child(currentUser.getUid()).child("emailText").setValue(emailText.getText().toString());
         fBase.child("users").child(currentUser.getUid()).child("firstNameText").setValue(firstNameText.getText().toString());
         fBase.child("users").child(currentUser.getUid()).child("lastNameText").setValue(lastNameText.getText().toString());
-        fBase.child("users").child(currentUser.getUid()).child("phoneNumber").setValue(123456789);
+        fBase.child("users").child(currentUser.getUid()).child("phoneNumber").setValue(phoneNumber.getText().toString());
+    }
+
+    private boolean checkFields(){
+        boolean clear = true;
+        String email = emailText.getText().toString().trim();
+        String pw = password.getText().toString().trim();
+        String fName = firstNameText.getText().toString().trim();
+        String lName = lastNameText.getText().toString().trim();
+        String pw2 = reEnterPassword.getText().toString().trim();
+        String phoneNo = phoneNumber.getText().toString().trim();
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(RegisterActivity.this, "Please Enter an email.", Toast.LENGTH_LONG).show();
+            clear=false;
+            return clear;
+        }
+        if(TextUtils.isEmpty(pw)){
+            Toast.makeText(RegisterActivity.this, "Please Enter a password", Toast.LENGTH_LONG).show();
+            clear=false;
+            return clear;
+        }
+        if(pw.length()<8){
+            Toast.makeText(RegisterActivity.this, "Minimum Password requirement: 8 Characters long.", Toast.LENGTH_LONG).show();
+            clear=false;
+            return clear;
+        }
+        if(!pw.equals(pw2)) {
+            Toast.makeText(RegisterActivity.this, "Passwords do not match.", Toast.LENGTH_LONG).show();
+            clear = false;
+            return clear;
+        }
+        if(TextUtils.isEmpty(fName)){
+            Toast.makeText(RegisterActivity.this, "Please Enter a first name.", Toast.LENGTH_LONG).show();
+            clear=false;
+            return clear;
+        }
+        if(TextUtils.isEmpty(lName)) {
+            Toast.makeText(RegisterActivity.this, "Please Enter a last  name.", Toast.LENGTH_LONG).show();
+            clear = false;
+            return clear;
+        }
+        if(TextUtils.isEmpty(phoneNo)||phoneNo.length()!=10){
+            Toast.makeText(RegisterActivity.this, "Please Enter a valid 10 digit phone Number.", Toast.LENGTH_LONG).show();
+            clear=false;
+            return clear;
+        }
+        return clear;
     }
 }
 
