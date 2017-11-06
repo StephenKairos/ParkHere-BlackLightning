@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +27,8 @@ import java.util.Map;
 public class ParkingListingActivity extends AppCompatActivity implements View.OnClickListener{
     Button bSearch;
     ListView listViewer;
-
+    ListAdapter listAdapter;
+    ParkingSpace[] listings;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mDB;
@@ -58,9 +60,15 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                     }
                 });
 
+        listings = getSpaces();
+//        listViewer = (ListView) findViewById(R.id.park);
+//        listViewer.setAdapter(listAdapter);
+
         bSearch = (Button) findViewById(R.id.searchButton);
     }
-
+    public ParkingSpace[] getSpaces(){
+        return null;
+    }
     @Override
     public void onClick(View v) {
         Log.d("TEST","Something Clicked");
@@ -71,14 +79,3 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
