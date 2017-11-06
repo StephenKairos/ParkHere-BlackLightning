@@ -3,6 +3,7 @@ package com.blacklightning.parkhere;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -129,21 +130,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
          bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);
          bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
          bEditProfile = (Button) findViewById(R.id.editProfile);
-         bLogOut = (Button) findViewById(R.id.logOut);
+         bLogOut = (Button) findViewById(R.id.LogOut);
 
          bCreateParkingSpots.setOnClickListener(this);
          bEditProfile.setOnClickListener(this);
+         bLogOut.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if(v==bEditProfile){
+         Log.d("TEST","Something Clicked");
+
+        if(v == bEditProfile){
             Intent editPro5Intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
             startActivity(editPro5Intent);
-        } else if(v==bCreateParkingSpots){
+        } else if(v == bCreateParkingSpots){
             Intent createParkingIntent = new Intent(ProfileActivity.this, CreateParkingSpot.class);
             startActivity(createParkingIntent);
         } else if(v == bLogOut) {
+            Log.d("TEST", "Logged Out");
+
             firebaseAuth.signOut();
             Intent logoutIntent = new Intent(ProfileActivity.this, LoginActivity.class);
             startActivity(logoutIntent);

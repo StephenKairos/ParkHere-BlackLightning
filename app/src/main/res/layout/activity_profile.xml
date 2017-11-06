@@ -94,7 +94,7 @@
                     android:text="Edit Profile" />
 
                 <Button
-                    android:id="@+id/logOut"
+                    android:id="@+id/LogOut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Log Out" />
