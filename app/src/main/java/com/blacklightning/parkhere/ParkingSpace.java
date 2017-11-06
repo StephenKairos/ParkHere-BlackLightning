@@ -27,7 +27,8 @@ public class ParkingSpace {
         this.EndDate=endDate;
         this.StartTime=startTime;
         this.EndTime=endTime;
-        this.ParkingSpaceID=StAddress.replaceAll("\\s|.","")+Zip;
+        this.ParkingSpaceID=StAddress.replaceAll("[\\s\\-\\+\\.\\^:,]","")+Zip;
+
     }
     public String getId(){
         return ParkingSpaceID;
