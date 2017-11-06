@@ -21,49 +21,57 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class ParkingSpotActivity extends AppCompatActivity implements View.OnClickListener{
-    Button bViewParkingSpots;
-    Button bBookParkingSpots;
-    Button bCreateParkingSpots;
-    Button bEditProfile;
-    Button bLogOut;
-    TextView firstNameText;
-    TextView lastNameText;
-    TextView userNameText;
-    TextView emailText;
-    TextView phoneText;
+    Button bBackToList;
+    TextView pStAddress;
+    TextView pCity;
+    TextView pState;
+    TextView pZipCode;
+    TextView pRate;
+    TextView pTimeStart;
+    TextView pTimeEnd;
+    TextView pDateStart;
+    TextView pDateEnd;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mDB;
 
 
-    public String userName, firstName, lastName, email, phoneNumber;
+    public String stAddress, city, state, zipCode, rate, timeStart, timeEnd, dateStart, dateEnd;
+
+    private String pSpotID;
 
     public String queryResult;
 
      protected void onCreate(Bundle savedInstanceState){
          super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_profile);
+
+         Intent intent = getIntent();
+         pSpotID = intent.getStringExtra("pSpotID");
+
+         setContentView(R.layout.activity_parking_spot);
 
          firebaseAuth = FirebaseAuth.getInstance();
-         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+         currentUser = firebaseAuth.getCurrentUser();
          mDB = FirebaseDatabase.getInstance().getReference();
 
-         userNameText = (TextView) findViewById(R.id.userName);
-         firstNameText = (TextView) findViewById(R.id.firstName);
-         lastNameText = (TextView) findViewById(R.id.lastName);
-         emailText = (TextView) findViewById(R.id.emailAddress);
-         phoneText = (TextView) findViewById(R.id.phoneNumber);
-
-
+         pStAddress = (TextView) findViewById(R.id.pStAddress);
+         pCity = (TextView) findViewById(R.id.pCity);
+         pState = (TextView) findViewById(R.id.pState);
+         pZipCode = (TextView) findViewById(R.id.pZipcode);
+         pRate = (TextView) findViewById(R.id.pRate);
+         pTimeStart = (TextView) findViewById(R.id.pTimeStart);
+         pTimeEnd = (TextView) findViewById(R.id.pTimeEnd);
+         pDateStart = (TextView) findViewById(R.id.pDateStart);
+         pDateEnd = (TextView) findViewById(R.id.pDateEnd);
 
          if(currentUser != null) {
 
-             mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("stAddress").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
-                     userName = snapshot.getValue().toString();
-                     userNameText.setText("User: " + userName);
+                     stAddress = snapshot.getValue().toString();
+                     pStAddress.setText("Address: " + stAddress);
                  }
 
                  @Override
@@ -72,11 +80,11 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("users").child(currentUser.getUid()).child("firstNameText").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("city").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
-                     firstName = snapshot.getValue().toString();
-                     firstNameText.setText("First Name: " + firstName);
+                     city = snapshot.getValue().toString();
+                     pCity.setText("City: " + city);
                  }
 
                  @Override
@@ -85,11 +93,11 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("users").child(currentUser.getUid()).child("lastNameText").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("zip").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
-                     lastName = snapshot.getValue().toString();
-                     lastNameText.setText("Last Name: " + lastName);
+                     zipCode = snapshot.getValue().toString();
+                     pZipCode.setText("Zip Code: " + zipCode);
                  }
 
                  @Override
@@ -98,11 +106,11 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("users").child(currentUser.getUid()).child("emailText").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
-                     email = snapshot.getValue().toString();
-                     emailText.setText("Email Address: " + email);
+                     state = snapshot.getValue().toString();
+                     pState.setText("State: " + state);
                  }
 
                  @Override
@@ -111,11 +119,11 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("users").child(currentUser.getUid()).child("phoneNumber").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("rate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
-                     phoneNumber = snapshot.getValue().toString();
-                     phoneText.setText("Phone Number: " + phoneNumber);
+                     rate = snapshot.getValue().toString();
+                     pRate.setText("Rate: $" + rate + "per hour");
                  }
 
                  @Override
@@ -124,35 +132,68 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("startDate").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     dateStart = snapshot.getValue().toString();
+                     pDateStart.setText("Start Date: " + dateStart);
+                 }
+
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
+
+                 }
+             });
+
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("endDate").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     dateEnd = snapshot.getValue().toString();
+                     pDateEnd.setText("End Date: " + dateEnd);
+                 }
+
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
+
+                 }
+             });
+
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("startTime").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     timeStart = snapshot.getValue().toString();
+                     pTimeStart.setText("Start Time: " + timeStart);
+                 }
+
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
+
+                 }
+             });
+
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("endTime").addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(DataSnapshot snapshot) {
+                     timeEnd = snapshot.getValue().toString();
+                     pTimeEnd.setText("End Time: " + timeEnd);
+                 }
+
+                 @Override
+                 public void onCancelled(DatabaseError databaseError) {
+
+                 }
+             });
          }
 
-         bViewParkingSpots = (Button) findViewById(R.id.viewYourParkingSpots);
-         bBookParkingSpots = (Button) findViewById(R.id.bookParkingSpots);
-         bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
-         bEditProfile = (Button) findViewById(R.id.editProfile);
-         bLogOut = (Button) findViewById(R.id.LogOut);
-
-         bCreateParkingSpots.setOnClickListener(this);
-         bEditProfile.setOnClickListener(this);
-         bLogOut.setOnClickListener(this);
+         bBackToList = (Button) findViewById(R.id.bParkingSpotReturn);
+         bBackToList.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
          Log.d("TEST","Something Clicked");
 
-        if(v == bEditProfile){
-            Intent editPro5Intent = new Intent(ParkingSpotActivity.this, UpdateProfileActivity.class);
-            startActivity(editPro5Intent);
-        } else if(v == bCreateParkingSpots){
-            Intent createParkingIntent = new Intent(ParkingSpotActivity.this, CreateParkingSpot.class);
-            startActivity(createParkingIntent);
-        } else if(v == bLogOut) {
-            Log.d("TEST", "Logged Out");
-
-            firebaseAuth.signOut();
-            Intent logoutIntent = new Intent(ParkingSpotActivity.this, LoginActivity.class);
-            startActivity(logoutIntent);
+        if(v == bBackToList){
             finish();
         }
      }

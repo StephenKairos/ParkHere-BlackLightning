@@ -23,81 +23,80 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/parkingSpotTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Profile"
+                    android:text="Parking Spot"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
                 <TextView
-                    android:id="@+id/userName"
+                    android:id="@+id/pStAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="User Name" />
+                    android:hint="Address:" />
 
                 <TextView
-                    android:id="@+id/firstName"
+                    android:id="@+id/pCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="First Name" />
+                    android:hint="City:" />
 
                 <TextView
-                    android:id="@+id/lastName"
+                    android:id="@+id/pState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Last Name" />
+                    android:hint="State:" />
 
                 <TextView
-                    android:id="@+id/emailAddress"
+                    android:id="@+id/pZipcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Email Address" />
+                    android:hint="Zip Code" />
 
                 <TextView
-                    android:id="@+id/phoneNumber"
+                    android:id="@+id/pRate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Phone Number" />
+                    android:hint="Rate:" />
 
-                <Button
-                    android:id="@+id/bookParkingSpots"
+                <TextView
+                    android:id="@+id/pTimeStart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Book Parking Spots" />
+                    android:ems="10"
+                    android:hint="Start Time:" />
 
-                <Button
-                    android:id="@+id/viewYourParkingSpots"
+                <TextView
+                    android:id="@+id/pTimeEnd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="View Your Parking Spots" />
+                    android:ems="10"
+                    android:hint="End Time:" />
 
-                <Button
-                    android:id="@+id/createParkingSpots"
+                <TextView
+                    android:id="@+id/pDateStart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create Parking Spot" />
+                    android:ems="10"
+                    android:hint="Start Date:" />
 
-                <Button
-                    android:id="@+id/editProfile"
+                <TextView
+                    android:id="@+id/pDateEnd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Edit Profile" />
+                    android:ems="10"
+                    android:hint="End Date:" />
 
                 <Button
-                    android:id="@+id/LogOut"
+                    android:id="@+id/bParkingSpotReturn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Log Out" />
+                    android:text="Return" />
 
             </LinearLayout>
         </ScrollView>

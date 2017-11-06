@@ -137,6 +137,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
          bCreateParkingSpots.setOnClickListener(this);
          bEditProfile.setOnClickListener(this);
          bLogOut.setOnClickListener(this);
+         bViewParkingSpots.setOnClickListener(this);
          testMaps.setOnClickListener(this);
     }
 
@@ -160,6 +161,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         } else if(v == testMaps) {
             Intent mapIntent = new Intent(ProfileActivity.this, MapsActivity.class);
             startActivity(mapIntent);
+        } else if(v == bViewParkingSpots) {
+            Intent viewParkingSpotsIntent = new Intent(ProfileActivity.this, ParkingSpotActivity.class);
+            viewParkingSpotsIntent.putExtra("pSpotID", "kappst12467");
+            startActivity(viewParkingSpotsIntent);
         }
      }
 }
