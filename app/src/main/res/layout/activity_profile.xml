@@ -34,7 +34,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
                     android:hint="User Name" />
 
                 <TextView
@@ -42,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
                     android:hint="First Name" />
 
                 <TextView
@@ -50,7 +48,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
                     android:hint="Last Name" />
 
                 <TextView
@@ -58,7 +55,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
                     android:hint="Email Address" />
 
                 <TextView
@@ -66,7 +62,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
                     android:hint="Phone Number" />
 
                 <Button
