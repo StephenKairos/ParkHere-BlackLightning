@@ -3,11 +3,17 @@ package com.blacklightning.parkhere;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.google.firebase.auth.*;
 import com.google.firebase.database.*;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 
 public class UpdateProfileActivity extends AppCompatActivity {
@@ -20,6 +26,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_update_profile);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDB = FirebaseDatabase.getInstance().getReference();
@@ -38,7 +46,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 currentUserName = snapshot.getValue().toString();
-                userNameText.setHint("User: " + currentUserName);
+                //userNameText.setHint("User: " );//+ currentUserName);
+                userNameText.setText(currentUserName);
             }
 
             @Override
@@ -51,7 +60,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 currentFirstName = snapshot.getValue().toString();
-                firstNameText.setHint("First Name: " + currentFirstName);
+                firstNameText.setText(currentFirstName);
             }
 
             @Override
@@ -64,7 +73,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 currentLastName = snapshot.getValue().toString();
-                lastNameText.setHint("Last Name: " + currentLastName);
+                lastNameText.setText(currentLastName);
             }
 
             @Override
@@ -77,7 +86,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 currentEmail = snapshot.getValue().toString();
-                emailText.setHint("Email: " + currentEmail);
+                emailText.setText(currentEmail);
             }
 
             @Override
@@ -90,7 +99,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 currentPhone = snapshot.getValue().toString();
-                phoneText.setHint("Phone Number: " + currentPhone);
+                phoneText.setText(currentPhone);
             }
 
             @Override
@@ -98,7 +107,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
             }
         });
-
+        /*
         userNameText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -107,8 +116,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     submitButton.setEnabled(false);
                 }
                 else{
-                    confirmPassText.setEnabled(false);
-                    submitButton.setEnabled(false);
+                    confirmPassText.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }
             }
 
@@ -131,8 +140,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     submitButton.setEnabled(false);
                 }
                 else{
-                    confirmPassText.setEnabled(false);
-                    submitButton.setEnabled(false);
+                    confirmPassText.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }
             }
 
@@ -155,8 +164,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     submitButton.setEnabled(false);
                 }
                 else{
-                    confirmPassText.setEnabled(false);
-                    submitButton.setEnabled(false);
+                    confirmPassText.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }
             }
 
@@ -179,8 +188,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     submitButton.setEnabled(false);
                 }
                 else{
-                    confirmPassText.setEnabled(false);
-                    submitButton.setEnabled(false);
+                    confirmPassText.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }
             }
 
@@ -203,8 +212,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     submitButton.setEnabled(false);
                 }
                 else{
-                    confirmPassText.setEnabled(false);
-                    submitButton.setEnabled(false);
+                    confirmPassText.setEnabled(true);
+                    submitButton.setEnabled(true);
                 }
             }
 
@@ -218,8 +227,36 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
             }
         });
+        */
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TextUtils.isEmpty(userNameText.getText().toString()) ||
+                        TextUtils.isEmpty(firstNameText.getText().toString()) ||
+                        TextUtils.isEmpty(lastNameText.getText().toString()) ||
+                        TextUtils.isEmpty(emailText.getText().toString()) ||
+                        TextUtils.isEmpty(phoneText.getText().toString())) {
+                    Toast.makeText(UpdateProfileActivity.this, "Don't leave any field empty", LENGTH_SHORT).show();
+                }
+                else{
+                    // Need to confirm password
 
+                    if(TextUtils.isEmpty(confirmPassText.getText().toString())){
+                        Toast.makeText(UpdateProfileActivity.this, "Enter Password to Confirm", Toast.LENGTH_LONG).show();
+                    }
+                    else {
 
+                    }
+                    /*
+                    mDB.child("users").child(currentUser.getUid()).child("userName").setValue(userNameText.getText().toString());
+                    mDB.child("users").child(currentUser.getUid()).child("emailText").setValue(emailText.getText().toString());
+                    mDB.child("users").child(currentUser.getUid()).child("firstNameText").setValue(firstNameText.getText().toString());
+                    mDB.child("users").child(currentUser.getUid()).child("lastNameText").setValue(lastNameText.getText().toString());
+                    mDB.child("users").child(currentUser.getUid()).child("phoneNumber").setValue(phoneText.getText().toString());
+                    */
+                }
+            }
+        });
 
 
     }

@@ -26,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     Button bCreateParkingSpots;
     Button bEditProfile;
     Button bLogOut;
+    Button testMaps;
     TextView firstNameText;
     TextView lastNameText;
     TextView userNameText;
@@ -131,10 +132,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
          bCreateParkingSpots = (Button) findViewById(R.id.createParkingSpots);
          bEditProfile = (Button) findViewById(R.id.editProfile);
          bLogOut = (Button) findViewById(R.id.LogOut);
+         testMaps = (Button) findViewById(R.id.TestMaps);
 
          bCreateParkingSpots.setOnClickListener(this);
          bEditProfile.setOnClickListener(this);
          bLogOut.setOnClickListener(this);
+         testMaps.setOnClickListener(this);
     }
 
     @Override
@@ -154,6 +157,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Intent logoutIntent = new Intent(ProfileActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
             finish();
+        } else if(v == testMaps) {
+            Intent mapIntent = new Intent(ProfileActivity.this, MapsActivity.class);
+            startActivity(mapIntent);
         }
      }
 }
