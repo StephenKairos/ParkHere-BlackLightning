@@ -27,7 +27,7 @@ public class CreateParkingSpot extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_parking_spot);
-        mAuth = FirebaseAuth.getInstance();
+
 
         etStAddress = (EditText) findViewById(R.id.StreetAddress);
         etCity = (EditText) findViewById(R.id.City);
@@ -35,14 +35,8 @@ public class CreateParkingSpot extends AppCompatActivity {
         etZipCode = (EditText) findViewById(R.id.ZipCode);
         bCreate = (Button) findViewById(R.id.buttonRegister);
 
-        bCreate.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent createParkingIntent = new Intent(CreateParkingSpot.this, ProfileActivity.class);
-                CreateParkingSpot.this.startActivity(createParkingIntent);
-            }
-        }
-        );
+
+        
 
     }
 }
