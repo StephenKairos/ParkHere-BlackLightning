@@ -43,8 +43,8 @@ public class CreateParkingSpot extends AppCompatActivity {
         etState = (EditText) findViewById(R.id.State);
         etZipCode = (EditText) findViewById(R.id.ZipCode);
         etRate = (EditText) findViewById(R.id.HourlyRate);
-        etTimeStart = (EditText) findViewById(R.id.TimeStart);
-        etTimeEnd = (EditText)findViewById(R.id.TimeEnd);
+        //etTimeStart = (EditText) findViewById(R.id.TimeStart);
+        //etTimeEnd = (EditText)findViewById(R.id.TimeEnd);
         bCreate = (Button) findViewById(R.id.CreateParkingButton);
 
 
@@ -82,8 +82,8 @@ public class CreateParkingSpot extends AppCompatActivity {
         fBase.child("parkingspot").child(currentUser.getUid()).child("State").setValue(etState.getText().toString());
         fBase.child("parkingspot").child(currentUser.getUid()).child("ZipCode").setValue(etZipCode.getText().toString());
         fBase.child("parkingspot").child(currentUser.getUid()).child("Hourly Rate").setValue(etRate.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("Time Start").setValue(etTimeStart.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("Time End").setValue(etTimeEnd.getText().toString());
+        // fBase.child("parkingspot").child(currentUser.getUid()).child("Time Start").setValue(etTimeStart.getText().toString());
+        // fBase.child("parkingspot").child(currentUser.getUid()).child("Time End").setValue(etTimeEnd.getText().toString());
 
     }
 

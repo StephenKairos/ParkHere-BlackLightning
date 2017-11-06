@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Street Address" />
+                android:hint="Street Address"
+                android:inputType="textPostalAddress" />
 
             <EditText
                 android:id="@+id/City"
@@ -50,27 +51,65 @@
                 android:hint="Zip Code" />
 
             <EditText
-                android:inputType="numberDecimal"
                 android:id="@+id/HourlyRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Hourly Rate" />
+                android:hint="Hourly Rate"
+                android:inputType="numberDecimal" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date" />
 
             <EditText
-                android:inputType="datetime"
-                android:id="@+id/TimeStart"
+                android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Time Start" />
+                android:ems="10"
+                android:hint="MM/DD/YYYY"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Date" />
+
             <EditText
-                android:inputType="datetime"
-                android:id="@+id/TimeEnd"
+                android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Time End" />
+                android:ems="10"
+                android:hint="MM/DD/YYYY"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Time" />
+
+            <EditText
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="HH:MM"
+                android:inputType="time" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Time" />
+
+            <EditText
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="HH:MM"
+                android:inputType="time" />
 
             <Button
                 android:id="@+id/CreateParkingButton"
