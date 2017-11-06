@@ -31,6 +31,8 @@ public class CreateParkingSpot extends AppCompatActivity {
     EditText etRate;
     EditText etTimeStart;
     EditText etTimeEnd;
+    EditText etDateStart;
+    EditText etDateEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,10 @@ public class CreateParkingSpot extends AppCompatActivity {
         etState = (EditText) findViewById(R.id.State);
         etZipCode = (EditText) findViewById(R.id.ZipCode);
         etRate = (EditText) findViewById(R.id.HourlyRate);
-        etTimeStart = (EditText) findViewById(R.id.TimeStart);
-        etTimeEnd = (EditText)findViewById(R.id.TimeEnd);
+        etTimeStart = (EditText) findViewById(R.id.startTime);
+        etTimeEnd = (EditText)findViewById(R.id.endTime);
+        etDateStart = (EditText) findViewById(R.id.startDate);
+        etDateEnd = (EditText) findViewById(R.id.endDate);
         bCreate = (Button) findViewById(R.id.CreateParkingButton);
 
 
@@ -68,22 +72,27 @@ public class CreateParkingSpot extends AppCompatActivity {
             return;
         }
         currentUser = firebaseAuth.getCurrentUser();
-        createProfile();
+        createSpot();
 
     }
 
-    public void createProfile() {
-        //Reconfirm User
-        Log.d("Logged in User is", currentUser.getUid());
-        //Registration successful, let's add the user's info into the database
+    public void createSpot() {
+        String stAddress = etStAddress.getText().toString().trim();
+        String City = etCity.getText().toString().trim();
+        String State = etState.getText().toString().trim();
+        int ZipCode = Integer.parseInt(etZipCode.getText().toString().trim());
+        double rate = Double.parseDouble(etRate.getText().toString().trim());
+        String startDate = etDateStart.getText().toString().trim();
+        String endDate = etDateEnd.getText().toString().trim();
+        String startTime = etTimeStart.getText().toString().trim();
+        String endTime = etTimeEnd.getText().toString().trim();
 
-        fBase.child("parkingspot").child(currentUser.getUid()).child("StAddress").setValue(etStAddress.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("City").setValue(etCity.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("State").setValue(etState.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("ZipCode").setValue(etZipCode.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("Hourly Rate").setValue(etRate.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("Time Start").setValue(etTimeStart.getText().toString());
-        fBase.child("parkingspot").child(currentUser.getUid()).child("Time End").setValue(etTimeEnd.getText().toString());
+
+        ParkingSpace parkingSpace = new ParkingSpace(stAddress, City, State, ZipCode, rate, startDate,
+                endDate,startTime,endTime);
+        String parkingID = parkingSpace.getId();
+        fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
+
 
     }
 
@@ -92,8 +101,12 @@ public class CreateParkingSpot extends AppCompatActivity {
         String stAddress = etStAddress.getText().toString().trim();
         String City = etCity.getText().toString().trim();
         String State = etState.getText().toString().trim();
-        String ZipCode = etZipCode.getText().toString().trim();
-        String rate = etRate.getText().toString().trim();
+        String ZipCode =etZipCode.getText().toString().trim();
+        String Rate = etRate.getText().toString().trim();
+        String StartDate = etDateStart.getText().toString().trim();
+        String EndDate = etDateEnd.getText().toString().trim();
+        String StartTime = etTimeStart.getText().toString().trim();
+        String EndTime = etTimeEnd.getText().toString().trim();
 
         if(TextUtils.isEmpty(stAddress)){
             clear = false;
@@ -115,9 +128,29 @@ public class CreateParkingSpot extends AppCompatActivity {
             Toast.makeText(CreateParkingSpot.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(rate)){
+        if(TextUtils.isEmpty(Rate)){
             clear = false;
             Toast.makeText(CreateParkingSpot.this, "Missing Hourly Rate",Toast.LENGTH_LONG ).show();
+            return clear;
+        }
+        if(TextUtils.isEmpty(StartDate)){
+            clear = false;
+            Toast.makeText(CreateParkingSpot.this, "Missing Start Date",Toast.LENGTH_LONG ).show();
+            return clear;
+        }
+        if(TextUtils.isEmpty(EndDate)){
+            clear = false;
+            Toast.makeText(CreateParkingSpot.this, "Missing End Date",Toast.LENGTH_LONG ).show();
+            return clear;
+        }
+        if(TextUtils.isEmpty(StartTime)){
+            clear = false;
+            Toast.makeText(CreateParkingSpot.this, "Missing Start Time",Toast.LENGTH_LONG ).show();
+            return clear;
+        }
+        if(TextUtils.isEmpty(EndTime)){
+            clear = false;
+            Toast.makeText(CreateParkingSpot.this, "Missing End Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
         return clear;
