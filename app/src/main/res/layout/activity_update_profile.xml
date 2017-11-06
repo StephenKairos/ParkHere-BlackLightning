@@ -7,7 +7,10 @@
     android:orientation="vertical"
     tools:context="com.blacklightning.parkhere.UpdateProfileActivity"
     tools:ignore="Orientation">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User Name"/>
     <EditText
         android:layout_width="match_parent"
         android:inputType="textPersonName"
@@ -15,6 +18,10 @@
         android:maxLines="1"
         android:layout_marginBottom="10dp"
         android:id="@+id/userNameText"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="First Name"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +29,10 @@
         android:inputType="textPersonName"
         android:layout_marginBottom="10dp"
         android:id="@+id/firstNameText"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Last Name"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +40,10 @@
         android:layout_marginBottom="10dp"
         android:inputType="textPersonName"
         android:id="@+id/lastNameText"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email Address"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +51,10 @@
         android:layout_marginBottom="10dp"
         android:inputType="textEmailAddress"
         android:id="@+id/emailText"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,13 +69,12 @@
 
         android:id="@+id/confirmPassword"
         android:maxLines="1"
-        android:enabled="false"
         android:inputType="textPassword"
         android:hint="Enter Password to Confirm"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
+
         android:text="Confirm"
         android:id="@+id/Confirm"/>
 
