@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by Jason Liu on 11/1/2017.
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
     Button bViewParkingSpots;
     Button bBookParkingSpots;
     Button bCreateParkingSpots;
@@ -131,20 +131,24 @@ public class ProfileActivity extends AppCompatActivity {
          bEditProfile = (Button) findViewById(R.id.editProfile);
          bLogOut = (Button) findViewById(R.id.logOut);
 
-         bEditProfile.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent editPro5Intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
-                 startActivity(editPro5Intent);
-             }
-         });
-
+         bCreateParkingSpots.setOnClickListener(this);
+         bEditProfile.setOnClickListener(this);
 
 
      }
 
 
-
+    @Override
+    public void onClick(View v) {
+        if(v==bEditProfile){
+            Intent editPro5Intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
+            startActivity(editPro5Intent);
+        }
+        if(v==bCreateParkingSpots){
+            Intent createParkingIntent = new Intent(ProfileActivity.this, CreateParkingSpot.class);
+            startActivity(createParkingIntent);
+        }
+     }
 }
 
 
