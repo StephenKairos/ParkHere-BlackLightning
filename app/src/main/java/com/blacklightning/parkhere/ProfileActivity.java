@@ -139,8 +139,15 @@ public class ProfileActivity extends AppCompatActivity {
              }
          });
 
-
-
+         bLogOut.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 firebaseAuth.signOut();
+                 Intent logoutIntent = new Intent(ProfileActivity.this, LoginActivity.class);
+                 startActivity(logoutIntent);
+                 finish();
+             }
+         });
      }
 
 

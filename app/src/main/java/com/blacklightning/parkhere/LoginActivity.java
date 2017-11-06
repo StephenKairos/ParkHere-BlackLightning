@@ -115,8 +115,9 @@ public class LoginActivity extends AppCompatActivity {
                     //Log.d(TAG, "createUserWithEmail:success");
                     Toast.makeText(LoginActivity.this, "Success!",Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Logged In!");
-                    Intent registerIntent = new Intent(LoginActivity.this, ProfileActivity.class);
-                    startActivity(registerIntent);
+                    Intent profileIntent = new Intent(LoginActivity.this, ProfileActivity.class);
+                    startActivity(profileIntent);
+                    finish();
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
