@@ -49,8 +49,31 @@
                 android:layout_marginBottom="10dp"
                 android:hint="Zip Code" />
 
+            <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/HourlyRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Hourly Rate" />
+
+            <EditText
+                android:inputType="datetime"
+                android:id="@+id/TimeStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Time Start" />
+            <EditText
+                android:inputType="datetime"
+                android:id="@+id/TimeEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Time End" />
+
             <Button
-                android:id="@+id/Create"
+                android:id="@+id/CreateParkingButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="CREATE" />
