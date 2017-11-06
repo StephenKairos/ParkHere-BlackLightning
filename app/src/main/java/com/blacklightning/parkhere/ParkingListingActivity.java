@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Map;
+
 /**
  * Created by Jason Liu on 11/1/2017.
  */
@@ -28,6 +30,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mDB;
+    private Map<String, Object> parkingSpotList;
 
 
     public String queryResult;
@@ -40,74 +43,20 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDB = FirebaseDatabase.getInstance().getReference();
 
-        if(currentUser != null) {
+        DatabaseReference ref = mDB.child("parkingspot");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        parkingSpotList = (Map<String,Object>) dataSnapshot.getValue();
+                    }
 
-            mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    userName = snapshot.getValue().toString();
-                    userNameText.setText("User: " + userName);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("firstNameText").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    firstName = snapshot.getValue().toString();
-                    firstNameText.setText("First Name: " + firstName);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("lastNameText").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    lastName = snapshot.getValue().toString();
-                    lastNameText.setText("Last Name: " + lastName);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("emailText").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    email = snapshot.getValue().toString();
-                    emailText.setText("Email Address: " + email);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("phoneNumber").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    phoneNumber = snapshot.getValue().toString();
-                    phoneText.setText("Phone Number: " + phoneNumber);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
 
         bSearch = (Button) findViewById(R.id.searchButton);
     }
