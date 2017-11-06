@@ -94,6 +94,12 @@
                     android:text="Edit Profile" />
 
                 <Button
+                    android:id="@+id/TestMaps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Test Maps" />
+
+                <Button
                     android:id="@+id/LogOut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
