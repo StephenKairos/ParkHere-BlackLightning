@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,7 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 public class ParkingListingActivity extends AppCompatActivity implements View.OnClickListener{
     Button bSearch;
     ListView listViewer;
-
+    ListAdapter listAdapter;
+    ParkingSpace[] listings;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mDB;
@@ -39,60 +41,10 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDB = FirebaseDatabase.getInstance().getReference();
-
+        listings = getSpaces();
+        listViewer = (ListView) findViewById(R.id.parkingListings);
+        listViewer.setAdapter(listAdapter );
         if(currentUser != null) {
-
-            mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    userName = snapshot.getValue().toString();
-                    userNameText.setText("User: " + userName);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("firstNameText").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    firstName = snapshot.getValue().toString();
-                    firstNameText.setText("First Name: " + firstName);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("lastNameText").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    lastName = snapshot.getValue().toString();
-                    lastNameText.setText("Last Name: " + lastName);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            mDB.child("users").child(currentUser.getUid()).child("emailText").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    email = snapshot.getValue().toString();
-                    emailText.setText("Email Address: " + email);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
 
             mDB.child("users").child(currentUser.getUid()).child("phoneNumber").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -111,7 +63,9 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
         bSearch = (Button) findViewById(R.id.searchButton);
     }
+    public ParkingSpace[] getSpaces(){
 
+    }
     @Override
     public void onClick(View v) {
         Log.d("TEST","Something Clicked");
@@ -122,14 +76,3 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
