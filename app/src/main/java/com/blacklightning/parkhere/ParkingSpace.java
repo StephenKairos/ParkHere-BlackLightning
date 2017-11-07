@@ -27,7 +27,7 @@ public class ParkingSpace {
         this.EndDate=endDate;
         this.StartTime=startTime;
         this.EndTime=endTime;
-        this.ParkingSpaceID=StAddress.replaceAll("[\\s\\-\\+\\.\\^:,]","")+Zip;
+        this.ParkingSpaceID=StAddress.replaceAll("[\\s\\-+.^:,#$\\[\\]]","")+Zip;
 
     }
     public String getId(){
@@ -44,11 +44,14 @@ public class ParkingSpace {
     }
     public int getZip(){
         return Zip;
-    }public double getRate (){
+    }
+    public double getRate (){
         return Rate;
-    }public String getStartDate(){
+    }
+    public String getStartDate(){
         return StartDate;
-    }public String getEndDate(){
+    }
+    public String getEndDate(){
         return EndDate;
     }
     public String getEndTime(){
