@@ -212,10 +212,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             mTimePicker = new TimePickerDialog(CreateParkingSpot.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    if(selectedHour<10){
-                        tvTimeStart.setText("0"+selectedHour + ":" + selectedMinute);}
-                    if(selectedMinute<10){
+                    if(selectedHour<10 & selectedMinute<10){
+                        tvTimeStart.setText("0"+selectedHour + ":" + "0"+selectedMinute);}
+                    else if(selectedMinute<10){
                         tvTimeStart.setText(selectedHour + ":" + "0"+selectedMinute);}
+                    else if(selectedHour<10){
+                        tvTimeStart.setText("0"+selectedHour + ":"+selectedMinute);}
                     else{
                         tvTimeStart.setText(selectedHour + ":" + selectedMinute);}
                 }
@@ -228,10 +230,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             mTimePicker = new TimePickerDialog(CreateParkingSpot.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    if(selectedHour<10){
-                        tvTimeEnd.setText("0"+selectedHour + ":" + selectedMinute);}
-                    if(selectedMinute<10){
+                    if(selectedHour<10 & selectedMinute<10){
+                        tvTimeEnd.setText("0"+selectedHour + ":" + "0"+selectedMinute);}
+                    else if(selectedMinute<10){
                         tvTimeEnd.setText(selectedHour + ":" + "0"+selectedMinute);}
+                    else if(selectedHour<10){
+                        tvTimeEnd.setText("0"+selectedHour + ":"+selectedMinute);}
                     else{
                         tvTimeEnd.setText(selectedHour + ":" + selectedMinute);}
                 }
