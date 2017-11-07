@@ -3,6 +3,7 @@ package com.blacklightning.parkhere;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -175,7 +176,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        Calendar mcurrentTime = Calendar.getInstance();
+        final Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
         int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
@@ -188,8 +189,8 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     tvDateStart.setText((month+1)+"/"+dayOfMonth+"/"+year);
                 }
-
             }, year, month,day);
+            mDatePicker.getDatePicker().setMinDate(mcurrentTime.getTimeInMillis()-1000);
             mDatePicker.setTitle("Select Date");
             mDatePicker.show();
         }
@@ -202,6 +203,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 }
 
             }, year, month,day);
+            mDatePicker.getDatePicker().setMinDate(mcurrentTime.getTimeInMillis()-1000);
             mDatePicker.setTitle("Select Date");
             mDatePicker.show();
         }
@@ -210,7 +212,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             mTimePicker = new TimePickerDialog(CreateParkingSpot.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    tvTimeStart.setText(selectedHour + ":" + selectedMinute);
+                    if(selectedHour<10){
+                        tvTimeStart.setText("0"+selectedHour + ":" + selectedMinute);}
+                    else if(selectedMinute<10){
+                        tvTimeStart.setText(selectedHour + ":" + "0"+selectedMinute);}
+                    else{
+                        tvTimeStart.setText(selectedHour + ":" + selectedMinute);}
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -221,7 +228,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             mTimePicker = new TimePickerDialog(CreateParkingSpot.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    tvTimeEnd.setText(selectedHour + ":" + selectedMinute);
+                    if(selectedHour<10){
+                        tvTimeStart.setText("0"+selectedHour + ":" + selectedMinute);}
+                    else if(selectedMinute<10){
+                        tvTimeStart.setText(selectedHour + ":" + "0"+selectedMinute);}
+                    else{
+                        tvTimeStart.setText(selectedHour + ":" + selectedMinute);}
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
