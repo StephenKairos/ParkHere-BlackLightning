@@ -214,7 +214,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     if(selectedHour<10){
                         tvTimeStart.setText("0"+selectedHour + ":" + selectedMinute);}
-                    else if(selectedMinute<10){
+                    if(selectedMinute<10){
                         tvTimeStart.setText(selectedHour + ":" + "0"+selectedMinute);}
                     else{
                         tvTimeStart.setText(selectedHour + ":" + selectedMinute);}
@@ -229,11 +229,11 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     if(selectedHour<10){
-                        tvTimeStart.setText("0"+selectedHour + ":" + selectedMinute);}
-                    else if(selectedMinute<10){
-                        tvTimeStart.setText(selectedHour + ":" + "0"+selectedMinute);}
+                        tvTimeEnd.setText("0"+selectedHour + ":" + selectedMinute);}
+                    if(selectedMinute<10){
+                        tvTimeEnd.setText(selectedHour + ":" + "0"+selectedMinute);}
                     else{
-                        tvTimeStart.setText(selectedHour + ":" + selectedMinute);}
+                        tvTimeEnd.setText(selectedHour + ":" + selectedMinute);}
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
