@@ -67,7 +67,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
          if(currentUser != null) {
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("stAddress").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("stAddress").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      stAddress = snapshot.getValue().toString();
@@ -80,7 +80,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("city").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("city").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      city = snapshot.getValue().toString();
@@ -93,7 +93,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("zip").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("zip").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      zipCode = snapshot.getValue().toString();
@@ -106,7 +106,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      state = snapshot.getValue().toString();
@@ -119,7 +119,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("rate").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("rate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      rate = snapshot.getValue().toString();
@@ -132,7 +132,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("startDate").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("startDate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      dateStart = snapshot.getValue().toString();
@@ -145,7 +145,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("endDate").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("endDate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      dateEnd = snapshot.getValue().toString();
@@ -158,7 +158,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("startTime").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("startTime").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      timeStart = snapshot.getValue().toString();
@@ -171,7 +171,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child("7OiWhTgPrGe2Iv0zXCnNTjCHmBz2").child(pSpotID).child("endTime").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("endTime").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      timeEnd = snapshot.getValue().toString();

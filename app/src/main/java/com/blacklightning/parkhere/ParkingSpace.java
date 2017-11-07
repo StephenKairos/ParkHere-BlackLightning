@@ -51,17 +51,12 @@ public class ParkingSpace {
     public String getStartDate(){
         return StartDate;
     }
-    public String getEndDate(){
-        return EndDate;
-    }
+    public String getEndDate(){return EndDate;}
     public String getEndTime(){
         return EndTime  ;
     }
     public String getStartTime(){
         return StartTime;
     }
-
-
-
 
 }

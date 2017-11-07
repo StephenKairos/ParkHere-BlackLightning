@@ -32,6 +32,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
     private DatabaseReference fBase;
     private FirebaseUser currentUser;
 
+    private String currentSpotID;
     Button bCreate;
     EditText etStAddress;
     EditText etCity;
@@ -48,7 +49,6 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_parking_spot);
 
-
         etStAddress = (EditText) findViewById(R.id.StreetAddress);
         etCity = (EditText) findViewById(R.id.City);
         etState = (EditText) findViewById(R.id.State);
@@ -60,6 +60,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         tvDateEnd = (TextView) findViewById(R.id.endDate);
         bCreate = (Button) findViewById(R.id.CreateParkingButton);
 
+        currentSpotID="";
         fBase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -72,7 +73,9 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 createParkingSpot();
-                Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ProfileActivity.class);
+                Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ParkingSpotActivity.class);
+                CreatePSIntent.putExtra("pSpotID", currentSpotID);
+
                 startActivity(CreatePSIntent);
                 finish();
             }
@@ -106,7 +109,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 startDate, endDate,startTime,endTime);
         String parkingID = parkingSpace.getId();
         fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
-
+        currentSpotID=parkingID;
 
     }
 
