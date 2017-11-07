@@ -12,4 +12,5 @@
 
 * This app requires internet connection.
 * Registration allows you to use your own credentials.
+* Private URL: https://github.com/StephenKairos/ParkHere-BlackLightning
 
