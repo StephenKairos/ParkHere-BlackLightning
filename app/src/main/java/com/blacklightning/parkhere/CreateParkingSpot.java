@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CreateParkingSpot extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,6 +44,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
     TextView tvTimeEnd;
     TextView tvDateStart;
     TextView tvDateEnd;
+    Date startDate, endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,25 +74,29 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createParkingSpot();
-                Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ParkingSpotActivity.class);
-                CreatePSIntent.putExtra("pSpotID", currentSpotID);
-
-                startActivity(CreatePSIntent);
-                finish();
+                boolean createdBool =createParkingSpot();
+                if(createdBool){
+                    Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ParkingSpotActivity.class);
+                    CreatePSIntent.putExtra("pSpotID", currentSpotID);
+                    startActivity(CreatePSIntent);
+                    finish();
+                }
+                else{
+                    
+                }
             }
         });
 
 
     }
 
-    private void createParkingSpot(){
+    private boolean createParkingSpot(){
         if(!checkField()){
-            return;
+            return false;
         }
         currentUser = firebaseAuth.getCurrentUser();
         createSpot();
-
+        return true;
     }
 
     public void createSpot() {
@@ -128,7 +134,6 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         String EndDate = tvDateEnd.getText().toString().trim();
         String StartTime = tvTimeStart.getText().toString().trim();
         String EndTime = tvTimeEnd.getText().toString().trim();
-
         if(TextUtils.isEmpty(stAddress)){
             clear = false;
             Toast.makeText(CreateParkingSpot.this, "Missing Street Address",Toast.LENGTH_LONG ).show();
@@ -174,6 +179,11 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             Toast.makeText(CreateParkingSpot.this, "Missing End Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
+        if(!startDate.before(endDate)){
+            clear = false;
+            Toast.makeText(CreateParkingSpot.this, "End Time is before Start Time",Toast.LENGTH_LONG ).show();
+            return clear;
+        }
         return clear;
     }
 
@@ -191,6 +201,8 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     tvDateStart.setText((month+1)+"/"+dayOfMonth+"/"+year);
+                    mcurrentTime.set(year, month, dayOfMonth, 0, 0);
+                    startDate = mcurrentTime.getTime();
                 }
             }, year, month,day);
             mDatePicker.getDatePicker().setMinDate(mcurrentTime.getTimeInMillis()-1000);
@@ -203,6 +215,8 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     tvDateEnd.setText((month+1)+"/"+dayOfMonth+"/"+year);
+                    mcurrentTime.set(year,month,dayOfMonth,0,1);
+                    endDate = mcurrentTime.getTime();
                 }
 
             }, year, month,day);
