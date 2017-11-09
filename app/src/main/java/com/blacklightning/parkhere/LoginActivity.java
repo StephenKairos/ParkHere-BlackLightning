@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // check login info
-    private void logInCheck(){
+    public void logInCheck(){
         String emailCheck = email.getText().toString();
         String passCheck = etPassword.getText().toString();
 
@@ -128,6 +128,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
 }
