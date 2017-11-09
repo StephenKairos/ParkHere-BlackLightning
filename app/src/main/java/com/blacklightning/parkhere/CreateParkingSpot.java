@@ -86,8 +86,6 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 }
             }
         });
-
-
     }
 
     private boolean createParkingSpot(){

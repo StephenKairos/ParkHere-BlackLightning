@@ -2,6 +2,7 @@ package com.blacklightning.parkhere;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,11 +31,11 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     Button bSearch;
     ListView listViewer;
     ListAdapter listAdapter;
-    private ArrayList<ParkingSpace> listings;
+    private ArrayList<ParkingItem> listings;
     private static FirebaseAuth firebaseAuth;
     private static FirebaseUser currentUser;
     private static DatabaseReference mDB;
-    private Map<String, Object> parkingSpotList;
+    private DataSnapshot parkingSpotList;
 
 
     public String queryResult;
@@ -47,16 +48,28 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDB = FirebaseDatabase.getInstance().getReference();
 
-        DatabaseReference ref = mDB.child("parkingspot" );
+        listings = new ArrayList<>();
+
+        DatabaseReference ref = mDB.child("parkingspot");
         ref.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //Get map of users in datasnapshot
-                        parkingSpotList = (Map<String,Object>) dataSnapshot.getValue();
-                        for(Object spaces : parkingSpotList.values()){
+                        parkingSpotList = dataSnapshot;
+                        for(DataSnapshot user : parkingSpotList.getChildren()){
+                            for(DataSnapshot spaceItem : user.getChildren()) {
+                                Log.d("Space", spaceItem.toString());
+                                Log.d("Zip", spaceItem.child("stAddress").getValue().toString());
 
+                                ParkingItem entry = new ParkingItem(spaceItem.child("stAddress").getValue().toString(), spaceItem.child("stAddress").getValue().toString(), spaceItem.child("stAddress").getValue().toString());
+                                Log.d("Entry", entry.getAddress().toString());
+                                listings.add(entry);
+                            }
+                        }
 
+                        for(ParkingItem space : listings) {
+                            Log.d("TestPark", space.getAddress());
                         }
                     }
 
@@ -80,5 +93,22 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
 
         }
+    }
+
+    public class ParkingItem {
+
+        private String parkingID;
+        private String address;
+        private String zip;
+
+        public ParkingItem(String id, String address, String zip) {
+            this.parkingID = id;
+            this.address = address;
+            this.zip = zip;
+        }
+
+        public String getID() { return parkingID; }
+        public String getAddress() { return address; }
+        public String getZip() { return zip; }
     }
 }

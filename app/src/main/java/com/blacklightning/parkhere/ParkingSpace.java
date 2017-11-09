@@ -28,8 +28,8 @@ public class ParkingSpace {
         this.StartTime=startTime;
         this.EndTime=endTime;
         this.ParkingSpaceID=StAddress.replaceAll("[\\s\\-+.^:,#$\\[\\]]","")+Zip;
-
     }
+
     public String getId(){
         return ParkingSpaceID;
     }
@@ -58,5 +58,4 @@ public class ParkingSpace {
     public String getStartTime(){
         return StartTime;
     }
-
 }
