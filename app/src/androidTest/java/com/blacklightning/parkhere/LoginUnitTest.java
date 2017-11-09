@@ -1,9 +1,12 @@
 package com.blacklightning.parkhere;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.UiThreadTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.AppCompatEditText;
 
@@ -26,39 +29,46 @@ public class LoginUnitTest {
     String invalidPass = "wrongPass";
 
     private FirebaseAuth auth;
+    @Rule
     private ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class,true,false);
 
+    @Rule
+    public UiThreadTestRule activityUITestRule = new UiThreadTestRule();
+
+    @Before
     public void setUp(){
         Intent intent = new Intent();
         activityRule.getActivity();
         activityRule.launchActivity(intent);
     }
 
-    public void logInwithWrongEmail(){
-        try {
+    @Test
+    public void logInwithWrongEmail() throws Throwable {
+
             activityRule.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     ((AppCompatEditText) activityRule.getActivity().findViewById(R.id.email)).setText(invalidEmail);
                 }
             });
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+
 
         activityRule.getActivity().logInCheck();
         Assert.assertNull(activityRule.getActivity().getCurrentUser());
-
+        System.out.println("Finish White Box");
     }
 
+    @Test
     public void logInwithWrongEmail_blackBox(){
         onView(withId(R.id.email)).perform(typeText(invalidEmail));
         onView(withId(R.id.password)).perform(typeText(validPassword));
         onView(withId(R.id.email_sign_in_button)).perform(click());
         onView(withId(R.id.layoutLogin)).check(matches(isDisplayed()));
+        System.out.println("Finish Black Box");
         activityRule.getActivity().finish();
     }
 
+    @Test
     public void logInwithRightEmail(){
         onView(withId(R.id.email)).perform(typeText(validEmail));
         onView(withId(R.id.password)).perform(typeText(validPassword));
