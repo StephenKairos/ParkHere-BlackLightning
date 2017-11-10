@@ -30,7 +30,7 @@ public class LoginUnitTest {
 
     private FirebaseAuth auth;
     @Rule
-    private ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class,true,false);
+    public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class,true,false);
 
     @Rule
     public UiThreadTestRule activityUITestRule = new UiThreadTestRule();
