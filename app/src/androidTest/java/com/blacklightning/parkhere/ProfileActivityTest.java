@@ -55,6 +55,7 @@ public class ProfileActivityTest {
 
         firebaseAuth = FirebaseAuth.getInstance();
         mDB = FirebaseDatabase.getInstance().getReference();
+        currentUser = firebaseAuth.getCurrentUser();
 
         firebaseAuth.signInWithEmailAndPassword("admin@sjsu.edu","password");
 
