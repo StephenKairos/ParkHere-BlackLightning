@@ -15,6 +15,9 @@ public class ParkingSpace {
     private String StartTime;
     private String EndTime;
     private String ParkingSpaceID;
+    public ParkingSpace(){
+
+    }
 
     public ParkingSpace(String stAddress, String city, String state, int zip, double rate, String startDate,
     String endDate, String startTime, String endTime){

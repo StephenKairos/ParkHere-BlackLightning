@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +11,7 @@ import org.junit.Test;
 
 public class getUser {
 
-    User testUser = null;
+    User testUser;
 
     @Before
     public void setUp() throws Exception {
