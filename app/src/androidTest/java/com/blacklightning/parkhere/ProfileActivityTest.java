@@ -8,7 +8,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.UiThreadTestRule;
@@ -41,23 +44,31 @@ public class ProfileActivityTest {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mDB;
+    private Boolean loggedIn;
 
     @Rule
     public ActivityTestRule<ProfileActivity> activityRule = new ActivityTestRule<ProfileActivity>(ProfileActivity.class, true, false);
 
     @Before
     public void setUp(){
-        FirebaseAuth.getInstance().signInWithEmailAndPassword("admin","password");
+        loggedIn = false;
 
-        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        mDB = FirebaseDatabase.getInstance().getReference();
+        currentUser = firebaseAuth.getCurrentUser();
+
+        firebaseAuth.signInWithEmailAndPassword("admin@sjsu.edu","password");
+
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null){
                     Log.i("LOG: ", "Not login");
                 } else{
                     firebaseAuth = FirebaseAuth.getInstance();
-                    currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    currentUser = firebaseAuth.getCurrentUser();
                     mDB = FirebaseDatabase.getInstance().getReference();
+                    boolean loggedIn = true;
                 }
             }
         });
@@ -65,24 +76,19 @@ public class ProfileActivityTest {
 
     @Test
     public void displayInfo(){
-<<<<<<< HEAD
-       mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot snapshot) {
-               userName = snapshot.getValue().toString();
-               //userNameText.setHint("User: " );//+ currentUserName);
-               Log.i("user: ", userName);
-               Assert.assertEquals(userName, "admin");
-           }
+        mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                userName = snapshot.getValue().toString();
+                //userNameText.setHint("User: " );//+ currentUserName);
+                Log.i("user: ", userName);
+                Assert.assertEquals("admin", userName);
+            }
 
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-           }
-       });
-   }
-=======
-
+            }
+        });
     }
->>>>>>> bfa5f5d83ec553e8f3a84ae440249b974672aabe
 }
