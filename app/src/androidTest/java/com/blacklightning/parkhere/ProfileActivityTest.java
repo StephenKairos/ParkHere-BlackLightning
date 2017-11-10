@@ -3,6 +3,7 @@ package com.blacklightning.parkhere;
 /**
  * Created by franc on Nov/9/2017.
  */
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,35 +33,35 @@ import android.widget.TextView;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileActivityTest {
-   private String userName, firstName, lastName, email, phoneNumber;
-   private String id;
+    private String userName, firstName, lastName, email, phoneNumber;
+    private String id;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mDB;
 
-   @Rule
-   public ActivityTestRule<ProfileActivity> activityRule = new ActivityTestRule<ProfileActivity>(ProfileActivity.class, true, false);
+    @Rule
+    public ActivityTestRule<ProfileActivity> activityRule = new ActivityTestRule<ProfileActivity>(ProfileActivity.class, true, false);
 
-   @Before
-   public void setUp(){
-       FirebaseAuth.getInstance().signInWithEmailAndPassword("admin","password");
+    @Before
+    public void setUp(){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword("admin","password");
 
-       FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-           @Override
-           public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-               if(firebaseAuth.getCurrentUser() == null){
-                   Log.i("LOG: ", "Not login");
-               } else{
-                   firebaseAuth = FirebaseAuth.getInstance();
-                   currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                   mDB = FirebaseDatabase.getInstance().getReference();
-               }
-           }
-       });
-   }
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    Log.i("LOG: ", "Not login");
+                } else{
+                    firebaseAuth = FirebaseAuth.getInstance();
+                    currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    mDB = FirebaseDatabase.getInstance().getReference();
+                }
+            }
+        });
+    }
 
-   @Test
+    @Test
     public void displayInfo(){
-       
-   }
+
+    }
 }
