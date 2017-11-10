@@ -44,8 +44,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
     TextView tvTimeEnd;
     TextView tvDateStart;
     TextView tvDateEnd;
+    Calendar mcurrentTime;
     Date startDate, endDate;
 
+    public CreateParkingSpot(){
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +127,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
      * Checks if Field entries are empty
      * @return true if filled out
      */
-    private boolean checkField(){
+    public boolean checkField(){
         boolean clear = true;
         String stAddress = etStAddress.getText().toString().trim();
         String City = etCity.getText().toString().trim();
@@ -154,7 +158,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             Toast.makeText(CreateParkingSpot.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(!ZipCode.matches("-?\\d+(\\.\\d+)?")){
+        if(!ZipCode.matches("\\d+")){
             clear = false;
             Toast.makeText(CreateParkingSpot.this, "Zip Code must be Numeric",Toast.LENGTH_LONG ).show();
             return clear;
@@ -194,7 +198,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        final Calendar mcurrentTime = Calendar.getInstance();
+        mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
         int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
@@ -279,4 +283,27 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
     public void setEtZipCode(String etz){
         etZipCode.setText(etz);
     }
+    public void setEtRate(String etr){
+        etZipCode.setText(etr);
+    }
+    public void setTvTimeStart(String tvts){
+        etZipCode.setText(tvts);
+    }
+    public void setTvTimeEnd(String tvte){
+        etZipCode.setText(tvte);
+    }
+    public void setTvDateStart(String tvds){
+        etZipCode.setText(tvds);
+    }
+    public void setTvDateEnd(String tvde){
+        etZipCode.setText(tvde);
+    }
+    public void setCalendarStartDate(int year, int month, int day){
+        mcurrentTime = Calendar.getInstance();
+        mcurrentTime.set(year,month,day,0,0);
+    }
+    public boolean checkCalendarDate(Date startdate, Date enddate){
+        return startdate.before(enddate);
+    }
+
 }
