@@ -9,7 +9,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.UiThreadTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.AppCompatEditText;
-
+import com.blacklightning.parkhere.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.junit.Assert;
