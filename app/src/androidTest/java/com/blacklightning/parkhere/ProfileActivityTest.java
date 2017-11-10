@@ -81,6 +81,7 @@ public class ProfileActivityTest {
                 userName = snapshot.getValue().toString();
                 //userNameText.setHint("User: " );//+ currentUserName);
                 Log.i("user: ", userName);
+                Assert.assertEquals("admin", userName);
             }
 
             @Override
