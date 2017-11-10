@@ -47,9 +47,7 @@ public class ProfileActivityTest {
 
     @Before
     public void setUp(){
-        FirebaseAuth.getInstance().signInWithEmailAndPassword("admin","password");
-
-        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword("admin","password").addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null){
@@ -65,24 +63,19 @@ public class ProfileActivityTest {
 
     @Test
     public void displayInfo(){
-<<<<<<< HEAD
-       mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot snapshot) {
-               userName = snapshot.getValue().toString();
-               //userNameText.setHint("User: " );//+ currentUserName);
-               Log.i("user: ", userName);
-               Assert.assertEquals(userName, "admin");
-           }
+        mDB.child("users").child(currentUser.getUid()).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                userName = snapshot.getValue().toString();
+                //userNameText.setHint("User: " );//+ currentUserName);
+                Log.i("user: ", userName);
+                Assert.assertEquals("admin", userName);
+            }
 
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-           }
-       });
-   }
-=======
-
+            }
+        });
     }
->>>>>>> bfa5f5d83ec553e8f3a84ae440249b974672aabe
 }
