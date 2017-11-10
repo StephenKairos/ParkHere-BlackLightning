@@ -96,7 +96,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         createSpot();
         return true;
     }
-
+    public Date getStartDate(){
+        return startDate;
+    }
+    public Date getEndDate(){
+        return endDate;
+    }
     public void createSpot() {
         String stAddress = etStAddress.getText().toString().trim();
         String City = etCity.getText().toString().trim();
@@ -107,14 +112,11 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         String endDate = tvDateEnd.getText().toString().trim();
         String startTime = tvTimeStart.getText().toString().trim();
         String endTime = tvTimeEnd.getText().toString().trim();
-
-
         ParkingSpace parkingSpace = new ParkingSpace(stAddress, City, State, ZipCode, rate,
                 startDate, endDate,startTime,endTime);
         String parkingID = parkingSpace.getId();
         fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
         currentSpotID=parkingID;
-
     }
 
     /**
@@ -150,6 +152,11 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         if(TextUtils.isEmpty(ZipCode)){
             clear = false;
             Toast.makeText(CreateParkingSpot.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
+            return clear;
+        }
+        if(!ZipCode.matches("-?\\d+(\\.\\d+)?")){
+            clear = false;
+            Toast.makeText(CreateParkingSpot.this, "Zip Code must be Numeric",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(Rate)){
@@ -259,5 +266,17 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             mTimePicker.show();
         }
 
+    }
+    public void setEtStAddress(String eta){
+        etStAddress.setText(eta);
+    }
+    public void setEtCity(String etc){
+        etCity.setText(etc);
+    }
+    public void setEtState(String ets){
+        etState.setText(ets);
+    }
+    public void setEtZipCode(String etz){
+        etZipCode.setText(etz);
     }
 }
