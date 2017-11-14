@@ -1,5 +1,13 @@
 package com.blacklightning.parkhere;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
+
 /**
  * Created by Jason Liu on 11/5/2017.
  */
@@ -61,4 +69,28 @@ public class ParkingSpace {
     public String getStartTime(){
         return StartTime;
     }
+
+    public LatLng getLocationFromAddress(Context context){
+        String strAddress = StAddress + ", " + City + ", " + State;
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress,5);
+            if (address==null) {
+                return null;
+            }
+            Address location=address.get(0);
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+
+            return p1;
+        }
+        catch(Exception e){
+
+        }
+        return p1;
+    }
+
 }
