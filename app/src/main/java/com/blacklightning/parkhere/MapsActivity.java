@@ -2,23 +2,32 @@ package com.blacklightning.parkhere;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.view.View;;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.location.LocationServices;
+import android.location.LocationManager;
+
 import android.widget.Toast;
 
-
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
     private static final float ZOOM_DELTA = 2.0f;
     private static final float DEFAULT_MIN_ZOOM = 2.0f;
     private static final float DEFAULT_MAX_ZOOM = 22.0f;
+    private static final float DEFAULT_CURRENT_ZOOM = 10.0f;
     private GoogleMap mMap;
     private float mMinZoom;
     private float mMaxZoom;
+    private float currentZoom;
+    // default lat and long is for Sydney, Australia
+    private double currentLatitude = -34;
+    private double currentLongitute = 151;
+    //protected LocationListener locationListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +51,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         resetMinMaxZoom();
+
+        /**
+         * TODO: request for user location
+         * TODO: set markers for locations
+         */
+
+
+        //sets a bunch of UI settings to true
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setScrollGesturesEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+        LatLng sydney = new LatLng(currentLatitude, currentLongitute);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, currentZoom));
     }
 
     private void toast(String msg) {
         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    //Checks if the map is ready or not
     private boolean checkReady() {
         if (mMap == null) {
             Toast.makeText(this, "Map is not ready", Toast.LENGTH_SHORT).show();
@@ -60,11 +82,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return true;
     }
 
+    // Resets max and min zoom preferences
     private void resetMinMaxZoom() {
         mMinZoom = DEFAULT_MIN_ZOOM;
         mMaxZoom = DEFAULT_MAX_ZOOM;
     }
 
+    //Sets min zoom preference
     public void onSetMinZoomClamp(View view) {
         if (!checkReady()) {
             return;
@@ -75,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         toast("Min zoom preference set to: " + mMinZoom);
     }
 
+    //Sets max zoom preference
     public void onSetMaxZoomClamp(View view) {
         if (!checkReady()) {
             return;
@@ -85,6 +110,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         toast("Max zoom preference set to: " + mMaxZoom);
     }
 
+    public void setCurrentZoomOut(View view){
+        if(!checkReady()){
+            return;
+        }
+        if((currentZoom += ZOOM_DELTA)<= mMaxZoom) {
+        }
+    }
+
+    public void setCurrentZoomIn(View view){
+        if(!checkReady()){
+            return;
+        }
+        if((currentZoom -= ZOOM_DELTA) >= mMinZoom){
+            currentZoom -= ZOOM_DELTA;
+        }
+
+    }
+
+    public void resetCurrenZoom(View view){
+        if(!checkReady()){
+            return;
+        }
+        currentZoom = DEFAULT_CURRENT_ZOOM;
+    }
+    //Resets max and min zoom preferences
     public void onMinMaxZoomClampReset(View view) {
         if (!checkReady()) {
             return;
@@ -93,4 +143,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.resetMinMaxZoomPreference();
         toast("Min/Max zoom preferences reset.");
     }
+
+    public void moveToNewLatLng(){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitute), currentZoom));
+    }
+
+    public void setCurrentLatLng(double lat, double longi){
+        currentLatitude = lat;
+        currentLongitute = longi;
+        moveToNewLatLng();
+    }
+
 }
