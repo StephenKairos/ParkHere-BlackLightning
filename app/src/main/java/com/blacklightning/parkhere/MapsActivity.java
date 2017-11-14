@@ -23,10 +23,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private float mMinZoom;
     private float mMaxZoom;
     private float currentZoom;
+
     // default lat and long is for Sydney, Australia
+    //TODO: set the default location to user's current location
     private double currentLatitude = -34;
     private double currentLongitute = 151;
-    //protected LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /**
          * TODO: request for user location
          * TODO: set markers for locations
+         * TODO: use latLng instead of the currentLat and currentLong variables
          */
 
 
@@ -65,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(currentLatitude, currentLongitute);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Current Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, currentZoom));
     }
 
@@ -145,14 +147,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         toast("Min/Max zoom preferences reset.");
     }
 
-    public void moveToNewLatLng(){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitute), currentZoom));
-    }
 
+    //sets current lat and long and moves to that locations
     public void setCurrentLatLng(double lat, double longi){
         currentLatitude = lat;
         currentLongitute = longi;
-        moveToNewLatLng();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitute), currentZoom));
     }
 
+    //adds marker for parking space
+    public void getLatLngParking(ParkingSpace space){
+        LatLng newLatLng= space.getLocationFromAddress(this);
+        mMap.addMarker(new MarkerOptions().position(newLatLng).title(space.getStAddress()));
+    }
 }
