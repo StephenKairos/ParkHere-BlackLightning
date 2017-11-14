@@ -115,6 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         if((currentZoom += ZOOM_DELTA)<= mMaxZoom) {
+            currentZoom += ZOOM_DELTA;
         }
     }
 
