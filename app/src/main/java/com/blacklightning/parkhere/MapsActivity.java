@@ -69,6 +69,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(currentLatitude, currentLongitute);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Current Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, currentZoom));
+
+        getLatLngParking();
     }
 
     private void toast(String msg) {
@@ -156,10 +158,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //adds marker for parking space
-    public void getLatLngParking(ParkingSpace space){
-        LatLng newLatLng= space.getLocationFromAddress(this);
+    public void getLatLngParking(){
+        ParkingSpace testSpace = new ParkingSpace("4169 Lo Bue Way", "San Jose", "CA", 95511, 0, "test", "test","test","test");
+
+        LatLng newLatLng= testSpace.getLocationFromAddress(this);
         //mMap.addMarker(new MarkerOptions().position(newLatLng).title(space.getStAddress()));
         mMap.addMarker(new MarkerOptions().position(newLatLng).title("4169 Lo Bue Way, San Jose, CA 95111"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLng, currentZoom));
 
     }
 }
