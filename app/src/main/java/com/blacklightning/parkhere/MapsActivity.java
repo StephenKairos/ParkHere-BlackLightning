@@ -158,6 +158,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //adds marker for parking space
     public void getLatLngParking(ParkingSpace space){
         LatLng newLatLng= space.getLocationFromAddress(this);
-        mMap.addMarker(new MarkerOptions().position(newLatLng).title(space.getStAddress()));
+        //mMap.addMarker(new MarkerOptions().position(newLatLng).title(space.getStAddress()));
+        mMap.addMarker(new MarkerOptions().position(newLatLng).title("4169 Lo Bue Way, San Jose, CA 95111"));
+
     }
 }
