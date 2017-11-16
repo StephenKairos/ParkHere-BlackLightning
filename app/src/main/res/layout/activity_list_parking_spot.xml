@@ -36,7 +36,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/searchText"
-                        android:hint = "zip and other random stuff"
+                        android:hint = "ZIP"
+                        android:inputType="number"
+                        android:maxLength="10"
                         android:layout_weight="4"
                         />
                     <Button
