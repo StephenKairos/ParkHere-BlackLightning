@@ -1,6 +1,5 @@
 package com.blacklightning.parkhere;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,14 +8,14 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,15 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.SphericalUtil;
 
 /**
  * Created by Jason Liu on 11/1/2017.
  */
 
 public class ParkingListingActivity extends AppCompatActivity implements View.OnClickListener{
-    EditText searchText;
     Button bSearch;
     ListView listViewer;
     ListAdapter listAdapter;
@@ -47,9 +43,6 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     private static FirebaseUser currentUser;
     private static DatabaseReference mDB;
     private DataSnapshot parkingSpotList;
-
-    // Maps:
-
 
 
     public String queryResult;
@@ -76,16 +69,24 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 Log.d("Space", spaceItem.toString());
                                 Log.d("Zip", spaceItem.child("stAddress").getValue().toString());
 
-                                ParkingItem entry = new ParkingItem(spaceItem.child("stAddress").getValue().toString(), spaceItem.child("stAddress").getValue().toString(), spaceItem.child("stAddress").getValue().toString());
-                                Log.d("Entry", entry.getAddress().toString());
-                                listings.add(entry);
+                                String stAddress = spaceItem.child("stAddress").getValue().toString();
+                                String city = spaceItem.child("city").getValue().toString();
+                                String state = spaceItem.child("state").getValue().toString();
+
+                                String latlngAddress = stAddress + ", " + city + ", " + state;
+
+                                Geocoder geocoder = new Geocoder(ParkingListingActivity.this, Locale.getDefault());
+                                try {
+                                    List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
+                                    if(coordinateList != null) {
+                                        Address coor = coordinateList.get(0);
+                                        ParkingItem entry = new ParkingItem(spaceItem.child("stAddress").getValue().toString(), coor);
+                                        listings.add(entry);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-
-                        for(ParkingItem space : listings) {
-                            Log.d("TestPark", space.getAddress());
-
-
                         }
                     }
 
@@ -98,32 +99,18 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 //        listViewer = (ListView) findViewById(R.id.park);
 //        listViewer.setAdapter(listAdapter);
 
-        searchText = (EditText) findViewById(R.id.searchText);
         bSearch = (Button) findViewById(R.id.searchButton);
-        LatLng latlong =
     }
 
     @Override
     public void onClick(View v) {
         Log.d("TEST","Something Clicked");
 
-        if(v == bSearch){
-            double radius = 10.0;
-            String zipString = searchText.getText().toString();
-            LatLng center = getLocationFromAddress(this, zipString);
+        ListView parkingListings = (ListView) findViewById(R.id.parkingListings);
 
-            LatLng north = SphericalUtil.computeOffset(center, radius * Math.sqrt(2), 0);
-            LatLng east  = SphericalUtil.computeOffset(center, radius * Math.sqrt(2), 90);
-            LatLng south = SphericalUtil.computeOffset(center, radius * Math.sqrt(2), 180);
-            LatLng west = SphericalUtil.computeOffset(center, radius * Math.sqrt(2), 270);
+        if(v == bSearch && listings != null && !listings.isEmpty()){
+            for(ParkingItem item : listings) {
 
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            try {
-                List<Address> northAdresses = geocoder.getFromLocation(north.latitude, north.longitude, 5);
-                List<Address> eastAdresses  = geocoder.getFromLocation(east.latitude,east.longitude, 5);
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -131,44 +118,14 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     public class ParkingItem {
 
         private String parkingID;
-        private String address;
-        private String zip;
+        private Address addr;
 
-        public ParkingItem(String id, String address, String zip) {
+        public ParkingItem(String id, Address addr) {
             this.parkingID = id;
-            this.address = address;
-            this.zip = zip;
+            this.addr = addr;
         }
 
         public String getID() { return parkingID; }
-        public String getAddress() { return address; }
-        public String getZip() { return zip; }
-
-
-
-
-    }
-
-    public LatLng getLocationFromAddress(Context context, String strAddress){
-        //String strAddress = "";
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
-
-        try {
-            address = coder.getFromLocationName(strAddress, 100);
-            if (address==null) {
-                return null;
-            }
-            Address location=address.get(0);
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude());
-
-            return p1;
-        }
-        catch(Exception e){
-
-        }
-        return p1;
+        public Address getAddress() { return addr; }
     }
 }
