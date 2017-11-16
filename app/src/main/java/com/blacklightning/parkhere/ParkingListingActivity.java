@@ -3,6 +3,7 @@ package com.blacklightning.parkhere;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,13 +41,14 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     ListView listViewer;
     ListAdapter listAdapter;
     private ArrayList<ParkingItem> listings;
+    private ArrayList<ParkingItem> filteredListings;
     private static FirebaseAuth firebaseAuth;
     private static FirebaseUser currentUser;
     private static DatabaseReference mDB;
     private DataSnapshot parkingSpotList;
 
-
     public String queryResult;
+    public static final double MAX_DISTANCE = 10;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         mDB = FirebaseDatabase.getInstance().getReference();
 
         listings = new ArrayList<>();
+        filteredListings = new ArrayList<>();
 
         DatabaseReference ref = mDB.child("parkingspot");
         ref.addListenerForSingleValueEvent(
@@ -109,8 +113,32 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         ListView parkingListings = (ListView) findViewById(R.id.parkingListings);
 
         if(v == bSearch && listings != null && !listings.isEmpty()){
-            for(ParkingItem item : listings) {
+            EditText zipSearch = (EditText) findViewById(R.id.searchText);
 
+            if(zipSearch != null) {
+                try {
+                    Geocoder geocoder = new Geocoder(ParkingListingActivity.this, Locale.getDefault());
+                    List<Address> addresses = geocoder.getFromLocationName(zipSearch.getText().toString(), 1);
+                    if (addresses != null && !addresses.isEmpty()) {
+                        Address zipAddr = addresses.get(0);
+
+                        filteredListings = new ArrayList<>();
+
+                        for (ParkingItem item : listings) {
+                            double distance = MAX_DISTANCE + 1;
+                            float[] result = new float[3];
+                            Location.distanceBetween(zipAddr.getLatitude(), zipAddr.getLongitude(), item.getAddress().getLatitude(), item.getAddress().getLongitude(), result);
+                            distance = (double) result[0];
+                            if(distance <= MAX_DISTANCE) {
+                                filteredListings.add(item);
+                            }
+                        }
+
+                        
+                    }
+                } catch (IOException e) {
+                    // handle exception
+                }
             }
         }
     }
