@@ -161,6 +161,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         } else if(v == testMaps) {
             Intent mapIntent = new Intent(ProfileActivity.this, MapsActivity.class);
+
             startActivity(mapIntent);
         } else if(v == bViewParkingSpots) {
             Intent viewParkingSpotsIntent = new Intent(ProfileActivity.this, ParkingSpotActivity.class);
