@@ -151,6 +151,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
                         System.out.println("Adapter: " + listAdapter.getCount());
                         parkingListings.setAdapter(listAdapter);
+
                     }
                 } catch (IOException e) {
                     // handle exception
