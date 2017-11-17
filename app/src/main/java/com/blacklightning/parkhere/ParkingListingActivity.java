@@ -1,5 +1,6 @@
 package com.blacklightning.parkhere;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -48,7 +49,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     private DataSnapshot parkingSpotList;
 
     public String queryResult;
-    public static final double MAX_DISTANCE = 10;
+    public static final double MAX_DISTANCE = 10000;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -60,6 +61,9 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
         listings = new ArrayList<>();
         filteredListings = new ArrayList<>();
+
+        bSearch = (Button) findViewById(R.id.searchButton);
+        bSearch.setOnClickListener(this);
 
         DatabaseReference ref = mDB.child("parkingspot");
         ref.addListenerForSingleValueEvent(
@@ -78,8 +82,9 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 String state = spaceItem.child("state").getValue().toString();
 
                                 String latlngAddress = stAddress + ", " + city + ", " + state;
+                                Context context = ParkingListingActivity.this;
 
-                                Geocoder geocoder = new Geocoder(ParkingListingActivity.this, Locale.getDefault());
+                                Geocoder geocoder = new Geocoder(context);
                                 try {
                                     List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
                                     if(coordinateList != null) {
@@ -102,8 +107,6 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
 //        listViewer = (ListView) findViewById(R.id.park);
 //        listViewer.setAdapter(listAdapter);
-
-        bSearch = (Button) findViewById(R.id.searchButton);
     }
 
     @Override
@@ -112,17 +115,24 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
         ListView parkingListings = (ListView) findViewById(R.id.parkingListings);
 
+        System.out.println("Listings: " + listings.size());
+
         if(v == bSearch && listings != null && !listings.isEmpty()){
+            System.out.println("Start Filter");
+
             EditText zipSearch = (EditText) findViewById(R.id.searchText);
 
             if(zipSearch != null) {
                 try {
                     Geocoder geocoder = new Geocoder(ParkingListingActivity.this, Locale.getDefault());
                     List<Address> addresses = geocoder.getFromLocationName(zipSearch.getText().toString(), 1);
+
+                    System.out.println("Dafuq: " + addresses.size());
                     if (addresses != null && !addresses.isEmpty()) {
                         Address zipAddr = addresses.get(0);
-
+                        System.out.println("LatLongCheck: " + zipAddr.getLatitude() + " and " + zipAddr.getLongitude());
                         filteredListings = new ArrayList<>();
+                        ArrayList<String> listStrings = new ArrayList<>();
 
                         for (ParkingItem item : listings) {
                             double distance = MAX_DISTANCE + 1;
@@ -131,10 +141,16 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                             distance = (double) result[0];
                             if(distance <= MAX_DISTANCE) {
                                 filteredListings.add(item);
+                                listStrings.add(item.getID());
                             }
                         }
 
-                        
+                        System.out.println("Filtered: " + filteredListings.size());
+
+                        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings);
+
+                        System.out.println("Adapter: " + listAdapter.getCount());
+                        parkingListings.setAdapter(listAdapter);
                     }
                 } catch (IOException e) {
                     // handle exception
