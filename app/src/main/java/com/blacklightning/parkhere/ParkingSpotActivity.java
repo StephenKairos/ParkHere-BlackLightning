@@ -191,13 +191,14 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
          bBackToList = (Button) findViewById(R.id.bParkingSpotReturn);
          bBackToList.setOnClickListener(this);
          bViewOnMap = (Button) findViewById(R.id.bViewSpotOnMap);
-         pk = new ParkingSpace(pStAddress.getText().toString(), pCity.getText().toString(), pState.getText().toString(),
-                 Integer.parseInt(pZipCode.getText().toString()), Double.parseDouble(pRate.getText().toString()),
-                 pDateStart.getText().toString(), pDateEnd.getText().toString(), pTimeStart.getText().toString(),
-                 pTimeEnd.getText().toString());
+
          bViewOnMap.setOnClickListener(new OnClickListener() {
                                            @Override
                                            public void onClick(View view) {
+                                               pk = new ParkingSpace(stAddress, city, state,
+                                                       Integer.parseInt(zipCode), Double.parseDouble(rate),
+                                                       dateStart, dateEnd, timeStart,
+                                                       timeEnd);
                                                Intent goToMap = new Intent(ParkingSpotActivity.this, MapsActivity.class);
                                                goToMap.putExtra("LatLng", pk.getLocationFromAddress(ParkingSpotActivity.this));
                                                goToMap.putExtra("St Address", pk.getStAddress() + "," + pk.getCity() + "," + pk.getState());

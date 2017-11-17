@@ -13,8 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
     private static final float DEFAULT_CURRENT_ZOOM = 2.0f;
     private GoogleMap mMap;
-    private LatLng parkingSpace;
-    private String address;
+    private LatLng parkingSpace = new LatLng(0,0);
+    private String address = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
