@@ -41,7 +41,7 @@ import java.util.Map;
 public class ParkingListingActivity extends AppCompatActivity implements View.OnClickListener{
     Button bSearch;
     ListView listViewer ;
-    ListAdapter listAdapter;
+    ArrayAdapter<String> listAdapter;
     private ArrayList<ParkingItem> listings;
     private ArrayList<ParkingItem> filteredListings;
     private static FirebaseAuth firebaseAuth;
@@ -111,7 +111,12 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         listViewer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent 
+                String selection = listAdapter.getItem(i);
+                for(ParkingItem item : filteredListings) {
+                    if(item.getID().equals(selection)) {
+                        Toast.makeText(ParkingListingActivity.this, "Selected item: " + item.getID(), Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -156,7 +161,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
                         System.out.println("Filtered: " + filteredListings.size());
 
-                        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings);
+                        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings);
 
                         System.out.println("Adapter: " + listAdapter.getCount());
                         parkingListings.setAdapter(listAdapter);
