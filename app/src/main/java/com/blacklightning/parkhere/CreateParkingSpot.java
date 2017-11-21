@@ -83,11 +83,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                 if(createdBool && createSpot()){
                     Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ParkingSpotActivity.class);
                     CreatePSIntent.putExtra("pSpotID", currentSpotID);
+                    CreatePSIntent.putExtra("userID", currentUser.getUid());
                     startActivity(CreatePSIntent);
                     finish();
                 }
                 else{
-                    
+
                 }
             }
         });
@@ -124,7 +125,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             Toast.makeText(this, "Address is not REAL",Toast.LENGTH_LONG).show();
             return false;
         }
-        else{
+        else {
             String parkingID = parkingSpace.getId();
             fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
             currentSpotID=parkingID;
@@ -197,11 +198,12 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             Toast.makeText(CreateParkingSpot.this, "Missing End Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(!startDate.before(endDate)){
+        if(startDate.after(endDate)){
             clear = false;
             Toast.makeText(CreateParkingSpot.this, "End Time is before Start Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
+
         return clear;
     }
 
