@@ -93,6 +93,12 @@
                     android:hint="End Date:" />
 
                 <Button
+                    android:id="@+id/bViewSpotOnMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View on Map" />
+
+                <Button
                     android:id="@+id/bParkingSpotReturn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

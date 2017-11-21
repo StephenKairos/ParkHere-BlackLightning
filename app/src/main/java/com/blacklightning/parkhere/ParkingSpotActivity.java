@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ParkingSpotActivity extends AppCompatActivity implements View.OnClickListener{
     Button bBackToList;
+    Button bViewOnMap;
     TextView pStAddress;
     TextView pCity;
     TextView pState;
@@ -31,6 +33,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
     TextView pTimeEnd;
     TextView pDateStart;
     TextView pDateEnd;
+    ParkingSpace pk;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
@@ -187,6 +190,23 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
          bBackToList = (Button) findViewById(R.id.bParkingSpotReturn);
          bBackToList.setOnClickListener(this);
+         bViewOnMap = (Button) findViewById(R.id.bViewSpotOnMap);
+
+         bViewOnMap.setOnClickListener(new OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+                                               pk = new ParkingSpace(stAddress, city, state,
+                                                       Integer.parseInt(zipCode), Double.parseDouble(rate),
+                                                       dateStart, dateEnd, timeStart,
+                                                       timeEnd);
+                                               Intent goToMap = new Intent(ParkingSpotActivity.this, MapsActivity.class);
+                                               goToMap.putExtra("LatLng", pk.getLocationFromAddress(ParkingSpotActivity.this));
+                                               goToMap.putExtra("St Address", pk.getStAddress() + "," + pk.getCity() + "," + pk.getState());
+                                               startActivity(goToMap);
+                                           }
+                                       }
+
+         );
     }
 
     @Override

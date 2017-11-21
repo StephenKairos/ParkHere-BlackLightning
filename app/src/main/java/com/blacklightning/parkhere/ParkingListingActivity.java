@@ -88,7 +88,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 Geocoder geocoder = new Geocoder(context);
                                 try {
                                     List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
-                                    if(coordinateList != null) {
+                                    if(coordinateList.size()>0) {
                                         Address coor = coordinateList.get(0);
                                         ParkingItem entry = new ParkingItem(spaceItem.child("stAddress").getValue().toString(), coor);
                                         listings.add(entry);
