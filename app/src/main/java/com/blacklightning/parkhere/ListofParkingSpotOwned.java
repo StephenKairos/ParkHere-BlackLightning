@@ -6,6 +6,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +28,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
     private static DatabaseReference mDB;
     private DataSnapshot parkingSpotList;
     private String userID;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +39,15 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDB = FirebaseDatabase.getInstance().getReference();
         userID = intent.getStringExtra("userID");
-        listings = new ArrayList<>();
+
+        listView = (ListView) findViewById(R.id.parkingListings);
 
         if(currentUser != null){
             DatabaseReference ref = mDB.child("parkingspot").child(userID);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    listings = new ArrayList<>();
                     parkingSpotList = dataSnapshot;
                     for(DataSnapshot spaceItem : parkingSpotList.getChildren()){
                         String stAddress = spaceItem.child("stAddress").getValue().toString();
@@ -51,21 +56,22 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
 
                         String latlngAddress = stAddress + ", " + city + ", " + state;
                         Context context = ListofParkingSpotOwned.this;
-
+                        System.out.println("Fuck: " + latlngAddress);
                         Geocoder geocoder = new Geocoder(context);
 
                         try {
                             List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
                             if(coordinateList.size()>0) {
                                 Address coor = coordinateList.get(0);
-
                                 listings.add(latlngAddress);
-
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
+
+                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
+                    listView.setAdapter(listAdapter);
                 }
 
                 @Override
