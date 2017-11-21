@@ -125,7 +125,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                         System.out.println("fucking failed");
                     }
 
-                    if(item.getID().equals(selection)) {
+                    if(item.getAddress().getAddressLine(0).equals(selection)) {
 
 
                         pItem = item;
@@ -187,7 +187,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                             distance = (double) result[0];
                             if(distance <= MAX_DISTANCE) {
                                 filteredListings.add(item);
-                                listStrings.add(item.getID());
+                                listStrings.add(item.getAddress().getAddressLine(0));
                             }
                         }
 
