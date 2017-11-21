@@ -92,6 +92,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                         Address coor = coordinateList.get(0);
                                         ParkingItem entry = new ParkingItem(user.getKey(), spaceItem.child("id").getValue().toString(), coor);
                                         listings.add(entry);
+
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
