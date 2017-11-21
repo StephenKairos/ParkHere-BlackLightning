@@ -74,7 +74,13 @@
                     android:id="@+id/viewYourParkingSpots"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="View Your Parking Spots" />
+                    android:text="View Owned Parking Spots" />
+
+                <Button
+                    android:id="@+id/TestMaps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Booked Parking Spots" />
 
                 <Button
                     android:id="@+id/createParkingSpots"
@@ -87,12 +93,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Edit Profile" />
-
-                <Button
-                    android:id="@+id/TestMaps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Test Maps" />
 
                 <Button
                     android:id="@+id/LogOut"
