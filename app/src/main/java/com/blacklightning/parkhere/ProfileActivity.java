@@ -165,7 +165,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(mapIntent);
         } else if(v == bViewParkingSpots) {
             Intent viewParkingSpotsIntent = new Intent(ProfileActivity.this, ParkingSpotActivity.class);
-            viewParkingSpotsIntent.putExtra("pSpotID", "3333test3stapt333333");
+            viewParkingSpotsIntent.putExtra("pSpotID", "123testpark94538");
+            viewParkingSpotsIntent.putExtra("userID", "ZDUtF78tK3S15XXsHFNlNGW6grf1");
             startActivity(viewParkingSpotsIntent);
         } else if(v == bBookParkingSpots) {
             Intent viewParkingSpotsIntent = new Intent(ProfileActivity.this, ParkingListingActivity.class);

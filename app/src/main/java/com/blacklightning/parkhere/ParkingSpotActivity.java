@@ -43,6 +43,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
     public String stAddress, city, state, zipCode, rate, timeStart, timeEnd, dateStart, dateEnd;
 
     private String pSpotID;
+    private String userID;
 
     public String queryResult;
 
@@ -51,6 +52,10 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
          Intent intent = getIntent();
          pSpotID = intent.getStringExtra("pSpotID");
+         userID = intent.getStringExtra("userID");
+
+         Log.d("Parking Spot ID", pSpotID);
+         Log.d("User ID", userID);
 
          setContentView(R.layout.activity_parking_spot);
 
@@ -70,7 +75,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
          if(currentUser != null) {
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("stAddress").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("stAddress").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      stAddress = snapshot.getValue().toString();
@@ -83,7 +88,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("city").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("city").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      city = snapshot.getValue().toString();
@@ -96,7 +101,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("zip").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("zip").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      zipCode = snapshot.getValue().toString();
@@ -109,7 +114,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      state = snapshot.getValue().toString();
@@ -122,7 +127,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("rate").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("rate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      rate = snapshot.getValue().toString();
@@ -135,7 +140,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("startDate").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("startDate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      dateStart = snapshot.getValue().toString();
@@ -148,7 +153,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("endDate").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("endDate").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      dateEnd = snapshot.getValue().toString();
@@ -161,7 +166,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("startTime").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("startTime").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      timeStart = snapshot.getValue().toString();
@@ -174,7 +179,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
                  }
              });
 
-             mDB.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("endTime").addListenerForSingleValueEvent(new ValueEventListener() {
+             mDB.child("parkingspot").child(userID).child(pSpotID).child("endTime").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(DataSnapshot snapshot) {
                      timeEnd = snapshot.getValue().toString();
@@ -189,24 +194,26 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
          }
 
          bBackToList = (Button) findViewById(R.id.bParkingSpotReturn);
-         bBackToList.setOnClickListener(this);
          bViewOnMap = (Button) findViewById(R.id.bViewSpotOnMap);
 
-         bViewOnMap.setOnClickListener(new OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               pk = new ParkingSpace(stAddress, city, state,
-                                                       Integer.parseInt(zipCode), Double.parseDouble(rate),
-                                                       dateStart, dateEnd, timeStart,
-                                                       timeEnd);
-                                               Intent goToMap = new Intent(ParkingSpotActivity.this, MapsActivity.class);
-                                               goToMap.putExtra("LatLng", pk.getLocationFromAddress(ParkingSpotActivity.this));
-                                               goToMap.putExtra("St Address", pk.getStAddress() + "," + pk.getCity() + "," + pk.getState());
-                                               startActivity(goToMap);
-                                           }
-                                       }
+         bBackToList.setOnClickListener(this);
+         bViewOnMap.setOnClickListener(this);
 
-         );
+//         bViewOnMap.setOnClickListener(new OnClickListener() {
+//                                           @Override
+//                                           public void onClick(View view) {
+//                                               pk = new ParkingSpace(stAddress, city, state,
+//                                                       Integer.parseInt(zipCode), Double.parseDouble(rate),
+//                                                       dateStart, dateEnd, timeStart,
+//                                                       timeEnd);
+//                                               Intent goToMap = new Intent(ParkingSpotActivity.this, MapsActivity.class);
+//                                               goToMap.putExtra("LatLng", pk.getLocationFromAddress(ParkingSpotActivity.this));
+//                                               goToMap.putExtra("St Address", pk.getStAddress() + "," + pk.getCity() + "," + pk.getState());
+//                                               startActivity(goToMap);
+//                                           }
+//                                       }
+//
+//         );
     }
 
     @Override
@@ -215,6 +222,15 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
         if(v == bBackToList){
             finish();
+        } else if (v == bViewOnMap) {
+            pk = new ParkingSpace(stAddress, city, state,
+                    Integer.parseInt(zipCode), Double.parseDouble(rate),
+                    dateStart, dateEnd, timeStart,
+                    timeEnd);
+            Intent goToMap = new Intent(ParkingSpotActivity.this, MapsActivity.class);
+            goToMap.putExtra("LatLng", pk.getLocationFromAddress(ParkingSpotActivity.this));
+            goToMap.putExtra("St Address", pk.getStAddress() + "," + pk.getCity() + "," + pk.getState());
+            startActivity(goToMap);
         }
      }
 }

@@ -90,7 +90,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                     List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
                                     if(coordinateList.size()>0) {
                                         Address coor = coordinateList.get(0);
-                                        ParkingItem entry = new ParkingItem(spaceItem.child("stAddress").getValue().toString(), coor);
+                                        ParkingItem entry = new ParkingItem(user.getKey(), spaceItem.child("id").getValue().toString(), coor);
                                         listings.add(entry);
                                     }
                                 } catch (IOException e) {
@@ -112,16 +112,41 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = listAdapter.getItem(i);
-                ParkingItem pItem;
+                ParkingItem pItem = null;
+
+                Log.d("Selection", selection);
+
                 for(ParkingItem item : filteredListings) {
+
+                    Log.d("Current ID", item.getUserID());
+
+                    if(item.getID() == null) {
+                        System.out.println("fucking failed");
+                    }
+
                     if(item.getID().equals(selection)) {
+
+
                         pItem = item;
-                        Toast.makeText(ParkingListingActivity.this, "Selected item: " + item.getID(), Toast.LENGTH_SHORT).show();
-                        Intent parkingSpotIntent = new Intent(ParkingListingActivity.this, ParkingSpotActivity.class);
-                        parkingSpotIntent.putExtra("parkingID", item.getID());
-                        startActivity(parkingSpotIntent);
                         break;
                     }
+                }
+
+                if(pItem != null) {
+                    Toast.makeText(ParkingListingActivity.this, "Selected item: " + pItem.getID(), Toast.LENGTH_SHORT).show();
+                    Intent parkingSpotIntent = new Intent(ParkingListingActivity.this, ParkingSpotActivity.class);
+
+                    if(pItem.getID() == null) {
+                        System.out.println("PID is NULL");
+                    }
+
+                    Log.d("Parking Spot", pItem.getID());
+                    Log.d("User", pItem.getUserID());
+
+                    parkingSpotIntent.putExtra("pSpotID", pItem.getID());
+                    parkingSpotIntent.putExtra("userID", pItem.getUserID());
+
+                    startActivity(parkingSpotIntent);
                 }
             }
         });
@@ -182,15 +207,18 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
     public class ParkingItem {
 
+        private String userID;
         private String parkingID;
         private Address addr;
 
-        public ParkingItem(String id, Address addr) {
+        public ParkingItem(String userID, String id, Address addr) {
+            this.userID = userID;
             this.parkingID = id;
             this.addr = addr;
         }
 
         public String getID() { return parkingID; }
+        public String getUserID() { return userID; }
         public Address getAddress() { return addr; }
     }
 }
