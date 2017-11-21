@@ -112,9 +112,15 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = listAdapter.getItem(i);
+                ParkingItem pItem;
                 for(ParkingItem item : filteredListings) {
                     if(item.getID().equals(selection)) {
+                        pItem = item;
                         Toast.makeText(ParkingListingActivity.this, "Selected item: " + item.getID(), Toast.LENGTH_SHORT).show();
+                        Intent parkingSpotIntent = new Intent(ParkingListingActivity.this, ParkingSpotActivity.class);
+                        parkingSpotIntent.putExtra("parkingID", item.getID());
+                        startActivity(parkingSpotIntent);
+                        break;
                     }
                 }
             }
