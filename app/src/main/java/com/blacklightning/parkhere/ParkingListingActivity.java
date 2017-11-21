@@ -10,6 +10,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +40,7 @@ import java.util.Map;
 
 public class ParkingListingActivity extends AppCompatActivity implements View.OnClickListener{
     Button bSearch;
-    ListView listViewer;
+    ListView listViewer ;
     ListAdapter listAdapter;
     private ArrayList<ParkingItem> listings;
     private ArrayList<ParkingItem> filteredListings;
@@ -105,9 +106,17 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                     }
                 });
 
-//        listViewer = (ListView) findViewById(R.id.park);
-//        listViewer.setAdapter(listAdapter);
+        listViewer = (ListView) findViewById(R.id.parkingListings);
+        //listViewer.setAdapter(listAdapter);
+        listViewer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent 
+            }
+        });
     }
+
+
 
     @Override
     public void onClick(View v) {
