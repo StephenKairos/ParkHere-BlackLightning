@@ -257,6 +257,8 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                         tvTimeStart.setText("0"+selectedHour + ":"+selectedMinute);}
                     else{
                         tvTimeStart.setText(selectedHour + ":" + selectedMinute);}
+                    startDate.setHours(selectedHour);
+                    startDate.setMinutes(selectedMinute);
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -275,6 +277,8 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
                         tvTimeEnd.setText("0"+selectedHour + ":"+selectedMinute);}
                     else{
                         tvTimeEnd.setText(selectedHour + ":" + selectedMinute);}
+                    endDate.setHours(selectedHour);
+                    endDate.setMinutes(selectedMinute);
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
