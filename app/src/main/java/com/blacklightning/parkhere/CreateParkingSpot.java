@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -79,7 +80,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 boolean createdBool =createParkingSpot();
-                if(createdBool){
+                if(createdBool && createSpot()){
                     Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ParkingSpotActivity.class);
                     CreatePSIntent.putExtra("pSpotID", currentSpotID);
                     startActivity(CreatePSIntent);
@@ -106,7 +107,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
     public Date getEndDate(){
         return endDate;
     }
-    public void createSpot() {
+    public boolean createSpot() {
         String stAddress = etStAddress.getText().toString().trim();
         String City = etCity.getText().toString().trim();
         String State = etState.getText().toString().trim();
@@ -118,9 +119,17 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         String endTime = tvTimeEnd.getText().toString().trim();
         ParkingSpace parkingSpace = new ParkingSpace(stAddress, City, State, ZipCode, rate,
                 startDate, endDate,startTime,endTime);
-        String parkingID = parkingSpace.getId();
-        fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
-        currentSpotID=parkingID;
+        LatLng test = parkingSpace.getLocationFromAddress(this);
+        if(test == null){
+            Toast.makeText(this, "Address is not REAL",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else{
+            String parkingID = parkingSpace.getId();
+            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
+            currentSpotID=parkingID;
+        }
+        return true;
     }
 
     /**
