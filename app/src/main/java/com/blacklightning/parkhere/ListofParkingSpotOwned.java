@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListofParkingSpotOwned extends AppCompatActivity {
+public class ListofParkingSpotOwned extends AppCompatActivity implements View.OnClickListener{
     private ArrayList<String> listings;
     private static FirebaseAuth firebaseAuth;
     private static FirebaseUser currentUser;
@@ -40,7 +41,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
         mDB = FirebaseDatabase.getInstance().getReference();
         userID = intent.getStringExtra("userID");
 
-        listView = (ListView) findViewById(R.id.parkingListings);
+        listView = (ListView) findViewById(R.id.ownedList);
 
         if(currentUser != null){
             DatabaseReference ref = mDB.child("parkingspot").child(userID);
@@ -62,6 +63,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                         try {
                             List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
                             if(coordinateList.size()>0) {
+                                System.out.println("Length: " + coordinateList.size());
                                 Address coor = coordinateList.get(0);
                                 listings.add(latlngAddress);
                             }
@@ -69,8 +71,8 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-
-                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
+                    System.out.println("Length listings: " + listings.size());
+                    ArrayAdapter<String> listAdapter = new ArrayAdapter<>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
                     listView.setAdapter(listAdapter);
                 }
 
@@ -80,5 +82,12 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        ListView listView = (ListView) findViewById(R.id.ownedList);
+
+
     }
 }
