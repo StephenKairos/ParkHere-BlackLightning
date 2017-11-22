@@ -23,3 +23,5 @@ View booked parking spots is not yet implemented
 Create parking spot will allow user to input information to create and add a parking spot to the database.
 Edit Profile will allow user to change any of the information he has added to his profile.
 Logout will log the user out and return him to the log in screen.
+
+*Github Private URL: https://github.com/StephenKairos/ParkHere-BlackLightning
