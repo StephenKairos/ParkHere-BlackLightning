@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,14 +23,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListofParkingSpotOwned extends AppCompatActivity implements View.OnClickListener{
+public class ListofParkingSpotOwned extends AppCompatActivity {
     private ArrayList<String> listings;
     private static FirebaseAuth firebaseAuth;
     private static FirebaseUser currentUser;
     private static DatabaseReference mDB;
     private DataSnapshot parkingSpotList;
+    ArrayAdapter<String> listAdapter;
     private String userID;
     ListView listView;
+    private ArrayList<String> parkingID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,11 @@ public class ListofParkingSpotOwned extends AppCompatActivity implements View.On
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     listings = new ArrayList<>();
+                    parkingID = new ArrayList<>();
                     parkingSpotList = dataSnapshot;
                     for(DataSnapshot spaceItem : parkingSpotList.getChildren()){
+                        parkingID.add(spaceItem.getKey().toString());
+                        System.out.println("Parking ID in DB: " + spaceItem.getKey().toString());
                         String stAddress = spaceItem.child("stAddress").getValue().toString();
                         String city = spaceItem.child("city").getValue().toString();
                         String state = spaceItem.child("state").getValue().toString();
@@ -72,7 +78,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity implements View.On
                         }
                     }
                     System.out.println("Length listings: " + listings.size());
-                    ArrayAdapter<String> listAdapter = new ArrayAdapter<>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
+                    listAdapter = new ArrayAdapter<>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
                     listView.setAdapter(listAdapter);
                 }
 
@@ -82,12 +88,42 @@ public class ListofParkingSpotOwned extends AppCompatActivity implements View.On
                 }
             });
         }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selection = listAdapter.getItem(i);
+                System.out.println("Address Owned: " + selection);
+                //ParkingItem pItem = null;
+                System.out.println("Length ParkingID: " + parkingID.size());
+                for(int j = 0; j < listings.size(); j++){
+                    if(listings.get(j).equals(selection)){
+                        Intent ownedParkingSpot = new Intent(ListofParkingSpotOwned.this, ParkingSpotActivity.class);
+
+                        ownedParkingSpot.putExtra("userID", userID);
+                        String parkingSpotID = parkingID.get(j);
+                        ownedParkingSpot.putExtra("pSpotID", parkingSpotID);
+                        startActivity(ownedParkingSpot);
+                    }
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View view) {
-        ListView listView = (ListView) findViewById(R.id.ownedList);
+    public class ParkingItem {
 
+        private String userID;
+        private String parkingID;
+        private Address addr;
 
+        public ParkingItem(String userID, String id, Address addr) {
+            this.userID = userID;
+            this.parkingID = id;
+            this.addr = addr;
+        }
+
+        public String getID() { return parkingID; }
+        public String getUserID() { return userID; }
+        public Address getAddress() { return addr; }
     }
 }
