@@ -94,7 +94,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = listAdapter.getItem(i);
                 System.out.println("Address Owned: " + selection);
-                //ParkingItem pItem = null;
+                
                 System.out.println("Length ParkingID: " + parkingID.size());
                 for(int j = 0; j < listings.size(); j++){
                     if(listings.get(j).equals(selection)){
@@ -110,20 +110,5 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
         });
     }
 
-    public class ParkingItem {
 
-        private String userID;
-        private String parkingID;
-        private Address addr;
-
-        public ParkingItem(String userID, String id, Address addr) {
-            this.userID = userID;
-            this.parkingID = id;
-            this.addr = addr;
-        }
-
-        public String getID() { return parkingID; }
-        public String getUserID() { return userID; }
-        public Address getAddress() { return addr; }
-    }
 }
