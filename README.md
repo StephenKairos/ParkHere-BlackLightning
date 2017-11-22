@@ -20,5 +20,11 @@
 * After installation the application can be opened and run by clicking on the icon. 
 * After opening the the user will be prompted with a log in screen. Refer to Login information to log in to a sample account.
 * Notes if the keyboard blocks the input space simply hit the back function on device. 
-* After loggin in the user will be able to access his profile. 
-
+* After loggin in the user will be able to access his profile.
+* The user will be able to navigate through the application with the buttons. 
+**Book parking spots** with go to a UI where the user can input a **zipcode** to locate parking spots near him
+**View owned parking spots** will show a list of street addresses of the users parking spots. 
+**View booked parking spots** is not yet implemented
+**Create parking spot** will allow user to input information to create and add a parking spot to the database. 
+**Edit Profile** will allow user to change any of the information he has added to his profile.
+**Logout** will log the user out and return him to the log in screen.
