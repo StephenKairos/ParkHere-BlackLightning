@@ -59,7 +59,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListofParkingSpotOwned"></activity>
+        <activity android:name=".ListofParkingSpotOwned" />
+        <activity android:name=".ListofParkingSpotRented"></activity>
     </application>
 
 </manifest>

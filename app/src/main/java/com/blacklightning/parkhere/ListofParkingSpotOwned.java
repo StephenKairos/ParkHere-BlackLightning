@@ -94,7 +94,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = listAdapter.getItem(i);
                 System.out.println("Address Owned: " + selection);
-                
+
                 System.out.println("Length ParkingID: " + parkingID.size());
                 for(int j = 0; j < listings.size(); j++){
                     if(listings.get(j).equals(selection)){

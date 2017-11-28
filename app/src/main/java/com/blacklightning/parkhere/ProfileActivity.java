@@ -160,12 +160,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(logoutIntent);
             finish();
         } else if(v == testMaps) {
-            Intent mapIntent = new Intent(ProfileActivity.this, MapsActivity.class);
-
-            startActivity(mapIntent);
+            Intent rentedIntent = new Intent(ProfileActivity.this, ListofParkingSpotRented.class);
+            rentedIntent.putExtra("userID", currentUser.getUid());
+            startActivity(rentedIntent);
         } else if(v == bViewParkingSpots) {
             Intent viewParkingSpotsIntent = new Intent(ProfileActivity.this, ListofParkingSpotOwned.class);
-            viewParkingSpotsIntent.putExtra("pSpotID", "123testpark94538");
+           // viewParkingSpotsIntent.putExtra("pSpotID", "123testpark94538");
             viewParkingSpotsIntent.putExtra("userID", currentUser.getUid());
             startActivity(viewParkingSpotsIntent);
         } else if(v == bBookParkingSpots) {
