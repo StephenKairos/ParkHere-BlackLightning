@@ -2,6 +2,7 @@ package com.blacklightning.parkhere;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -197,6 +198,12 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
                         System.out.println("Adapter: " + listAdapter.getCount());
                         parkingListings.setAdapter(listAdapter);
+                        if(listAdapter.getCount() >0 ){
+                            for(int i=0; i<listAdapter.getCount(); i++){
+                                if(parkingListings.getChildAt(i)!= null) System.out.println("exists");
+                            }
+                        }
+
 
                     }
                 } catch (IOException e) {

@@ -128,6 +128,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         else {
             String parkingID = parkingSpace.getId();
             fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
+            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
             currentSpotID=parkingID;
         }
         return true;
