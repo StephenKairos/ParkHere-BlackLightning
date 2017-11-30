@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -194,15 +195,22 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
                         System.out.println("Filtered: " + filteredListings.size());
 
-                        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings);
+                        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings) {
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                View v= super.getView(position, convertView, parent);
+                                v.setBackgroundColor(Color.RED);
+                                return v;
+                            }
+                        };
 
                         System.out.println("Adapter: " + listAdapter.getCount());
                         parkingListings.setAdapter(listAdapter);
-                        if(listAdapter.getCount() >0 ){
-                            for(int i=0; i<listAdapter.getCount(); i++){
-                                if(parkingListings.getChildAt(i)!= null) System.out.println("exists");
-                            }
-                        }
+//                        if(listAdapter.getCount() >0 ){
+//                            for(int i=0; i<listAdapter.getCount(); i++){
+//                                if(parkingListings.getChildAt(i)!= null) System.out.println("exists");
+//                            }
+//                        }
 
 
                     }
