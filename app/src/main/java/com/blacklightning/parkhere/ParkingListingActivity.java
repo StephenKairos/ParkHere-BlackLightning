@@ -46,6 +46,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
     ArrayAdapter<String> listAdapter;
     private ArrayList<ParkingItem> listings;
     private ArrayList<ParkingItem> filteredListings;
+    private ArrayList<Integer> parkingPopularityCounters;
     private static FirebaseAuth firebaseAuth;
     private static FirebaseUser currentUser;
     private static DatabaseReference mDB;
@@ -53,6 +54,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
     public String queryResult;
     public static final double MAX_DISTANCE = 10000;
+    public static final int COLOR_CONSTANT = 16;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -182,12 +184,12 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                         filteredListings = new ArrayList<>();
                         ArrayList<String> listStrings = new ArrayList<>();
 
-                        for (ParkingItem item : listings) {
+                        for (ParkingItem item : listings) { // Goes through all listings in query
                             double distance = MAX_DISTANCE + 1;
                             float[] result = new float[3];
                             Location.distanceBetween(zipAddr.getLatitude(), zipAddr.getLongitude(), item.getAddress().getLatitude(), item.getAddress().getLongitude(), result);
                             distance = (double) result[0];
-                            if(distance <= MAX_DISTANCE) {
+                            if(distance <= MAX_DISTANCE) { // Filters listings closest to user's query (aka ZIP or Address)
                                 filteredListings.add(item);
                                 listStrings.add(item.getAddress().getAddressLine(0));
                             }
@@ -199,7 +201,10 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                             @Override
                             public View getView(int position, View convertView, ViewGroup parent) {
                                 View v= super.getView(position, convertView, parent);
-                                v.setBackgroundColor(Color.RED);
+
+                                int colorValue = 0;
+
+                                v.setBackgroundColor(Color.rgb(COLOR_CONSTANT * position, COLOR_CONSTANT * position, COLOR_CONSTANT * position));
                                 return v;
                             }
                         };
