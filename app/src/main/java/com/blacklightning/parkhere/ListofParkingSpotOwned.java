@@ -79,7 +79,8 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                     }
                     System.out.println("Length listings: " + listings.size());
                     listAdapter = new ArrayAdapter<>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
-                    listView.setAdapter(listAdapter);
+                    MyCustomAdapter customAdapter = new MyCustomAdapter(listings,parkingID,userID, ListofParkingSpotOwned.this);
+                    listView.setAdapter(customAdapter);
                 }
 
                 @Override
@@ -89,25 +90,6 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
             });
         }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selection = listAdapter.getItem(i);
-                System.out.println("Address Owned: " + selection);
-
-                System.out.println("Length ParkingID: " + parkingID.size());
-                for(int j = 0; j < listings.size(); j++){
-                    if(listings.get(j).equals(selection)){
-                        Intent ownedParkingSpot = new Intent(ListofParkingSpotOwned.this, ParkingSpotActivity.class);
-
-                        ownedParkingSpot.putExtra("userID", userID);
-                        String parkingSpotID = parkingID.get(j);
-                        ownedParkingSpot.putExtra("pSpotID", parkingSpotID);
-                        startActivity(ownedParkingSpot);
-                    }
-                }
-            }
-        });
     }
 
 
