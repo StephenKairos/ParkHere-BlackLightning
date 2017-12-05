@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -46,7 +48,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.ownedList);
 
-        if(currentUser != null){
+        if (currentUser != null) {
             DatabaseReference ref = mDB.child("parkingspot").child(userID);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -54,7 +56,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                     listings = new ArrayList<>();
                     parkingID = new ArrayList<>();
                     parkingSpotList = dataSnapshot;
-                    for(DataSnapshot spaceItem : parkingSpotList.getChildren()){
+                    for (DataSnapshot spaceItem : parkingSpotList.getChildren()) {
                         parkingID.add(spaceItem.getKey().toString());
                         System.out.println("Parking ID in DB: " + spaceItem.getKey().toString());
                         String stAddress = spaceItem.child("stAddress").getValue().toString();
@@ -68,7 +70,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
 
                         try {
                             List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
-                            if(coordinateList.size()>0) {
+                            if (coordinateList.size() > 0) {
                                 System.out.println("Length: " + coordinateList.size());
                                 Address coor = coordinateList.get(0);
                                 listings.add(latlngAddress);
@@ -79,7 +81,8 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                     }
                     System.out.println("Length listings: " + listings.size());
                     listAdapter = new ArrayAdapter<>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
-                    listView.setAdapter(listAdapter);
+                    MyCustomAdapter customAdapter = new MyCustomAdapter(listings, parkingID, userID, ListofParkingSpotOwned.this);
+                    listView.setAdapter(customAdapter);
                 }
 
                 @Override
@@ -88,27 +91,25 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                 }
             });
         }
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selection = listAdapter.getItem(i);
-                System.out.println("Address Owned: " + selection);
-
-                System.out.println("Length ParkingID: " + parkingID.size());
-                for(int j = 0; j < listings.size(); j++){
-                    if(listings.get(j).equals(selection)){
-                        Intent ownedParkingSpot = new Intent(ListofParkingSpotOwned.this, ParkingSpotActivity.class);
-
-                        ownedParkingSpot.putExtra("userID", userID);
-                        String parkingSpotID = parkingID.get(j);
-                        ownedParkingSpot.putExtra("pSpotID", parkingSpotID);
-                        startActivity(ownedParkingSpot);
+    }
+    public static void deleteEntry(String parkingID, String userID) {
+        if (currentUser != null) {
+            DatabaseReference ref = mDB.child("parkingspot").child(userID);
+            Query deleteQuery = ref.child(parkingID);
+            deleteQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot parkingSnapshot: dataSnapshot.getChildren()) {
+                        parkingSnapshot.getRef().removeValue();
                     }
                 }
-            }
-        });
-    }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("onCancelled", databaseError.getMessage());
+                }
+            });
+        }
+    }
 
 }

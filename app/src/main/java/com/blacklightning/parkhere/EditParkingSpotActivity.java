@@ -27,11 +27,11 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CreateParkingSpot extends AppCompatActivity implements View.OnClickListener {
+public class EditParkingSpotActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authListener;
-    private DatabaseReference fBase;
+    private DatabaseReference mDB;
     private FirebaseUser currentUser;
 
     private String currentSpotID;
@@ -64,21 +64,23 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         tvDateEnd = (TextView) findViewById(R.id.endDate);
         bCreate = (Button) findViewById(R.id.CreateParkingButton);
 
-        currentSpotID="";
-        fBase = FirebaseDatabase.getInstance().getReference();
+        mDB = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
+
         tvTimeStart.setOnClickListener(this);
         tvTimeEnd.setOnClickListener(this);
         tvDateStart.setOnClickListener(this);
         tvDateEnd.setOnClickListener(this);
 
+
+
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean createdBool =createParkingSpot();
+                boolean createdBool =editParkingSpot();
                 if(createdBool && createSpot()){
-                    Intent CreatePSIntent = new Intent(CreateParkingSpot.this, ParkingSpotActivity.class);
+                    Intent CreatePSIntent = new Intent(EditParkingSpotActivity.this, ParkingSpotActivity.class);
                     CreatePSIntent.putExtra("pSpotID", currentSpotID);
                     CreatePSIntent.putExtra("userID", currentUser.getUid());
                     startActivity(CreatePSIntent);
@@ -91,7 +93,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         });
     }
 
-    private boolean createParkingSpot(){
+    private boolean editParkingSpot(){
         if(!checkField()){
             return false;
         }
@@ -119,8 +121,8 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         }
         else {
             String parkingID = parkingSpace.getId();
-            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
-            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
+            mDB.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
+            mDB.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
             currentSpotID=parkingID;
         }
         return true;
@@ -143,57 +145,57 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         String EndTime = tvTimeEnd.getText().toString().trim();
         if(TextUtils.isEmpty(stAddress)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing Street Address",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing Street Address",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(City)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing City",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing City",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(State)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing State",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing State",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(ZipCode)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(!ZipCode.matches("\\d+")){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Zip Code must be Numeric",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Zip Code must be Numeric",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(Rate)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing Hourly Rate",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing Hourly Rate",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(StartDate)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing Start Date",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing Start Date",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(EndDate)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing End Date",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing End Date",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(StartTime)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing Start Time",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing Start Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(TextUtils.isEmpty(EndTime)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "Missing End Time",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "Missing End Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
         if(startDate.after(endDate)){
             clear = false;
-            Toast.makeText(CreateParkingSpot.this, "End Time is before Start Time",Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditParkingSpotActivity.this, "End Time is before Start Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
 
@@ -210,7 +212,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         int year = mcurrentTime.get(Calendar.YEAR);
         if(v == tvDateStart){
             DatePickerDialog mDatePicker;
-            mDatePicker = new DatePickerDialog(CreateParkingSpot.this, new DatePickerDialog.OnDateSetListener() {
+            mDatePicker = new DatePickerDialog(EditParkingSpotActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     tvDateStart.setText((month+1)+"/"+dayOfMonth+"/"+year);
@@ -224,7 +226,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         }
         else if(v == tvDateEnd){
             DatePickerDialog mDatePicker;
-            mDatePicker = new DatePickerDialog(CreateParkingSpot.this, new DatePickerDialog.OnDateSetListener() {
+            mDatePicker = new DatePickerDialog(EditParkingSpotActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     tvDateEnd.setText((month+1)+"/"+dayOfMonth+"/"+year);
@@ -239,7 +241,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         }
         else if(v == tvTimeStart){
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(CreateParkingSpot.this, new TimePickerDialog.OnTimeSetListener() {
+            mTimePicker = new TimePickerDialog(EditParkingSpotActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     if(selectedHour<10 & selectedMinute<10){
@@ -259,7 +261,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         }
         else if(v == tvTimeEnd){
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(CreateParkingSpot.this, new TimePickerDialog.OnTimeSetListener() {
+            mTimePicker = new TimePickerDialog(EditParkingSpotActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     if(selectedHour<10 & selectedMinute<10){
@@ -279,7 +281,6 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         }
 
     }
-
     public boolean checkCalendarDate(Date startdate, Date enddate){
         return startdate.before(enddate);
     }
