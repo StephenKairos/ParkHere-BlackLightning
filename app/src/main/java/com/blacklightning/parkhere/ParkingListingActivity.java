@@ -86,7 +86,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 String city = spaceItem.child("city").getValue().toString();
                                 String state = spaceItem.child("state").getValue().toString();
 
-                                int counter = (int) spaceItem.child("counter").getValue();
+                                int counter = new Integer(spaceItem.child("counter").getValue().toString()).intValue();
 
                                 String latlngAddress = stAddress + ", " + city + ", " + state;
                                 Context context = ParkingListingActivity.this;
