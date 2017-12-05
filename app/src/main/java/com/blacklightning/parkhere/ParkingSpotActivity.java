@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 public class ParkingSpotActivity extends AppCompatActivity implements View.OnClickListener{
     Button bBackToList;
     Button bViewOnMap;
+    Button bRent;
+    Button bReview;
     TextView pStAddress;
     TextView pCity;
     TextView pState;
@@ -196,9 +198,13 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
          bBackToList = (Button) findViewById(R.id.bParkingSpotReturn);
          bViewOnMap = (Button) findViewById(R.id.bViewSpotOnMap);
+         bRent = (Button) findViewById(R.id.rentButton);
+         bReview = (Button) findViewById(R.id.rateButton);
 
          bBackToList.setOnClickListener(this);
          bViewOnMap.setOnClickListener(this);
+        bRent.setOnClickListener(this);
+        bReview.setOnClickListener(this);
 
 //         bViewOnMap.setOnClickListener(new OnClickListener() {
 //                                           @Override
@@ -232,6 +238,14 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
             goToMap.putExtra("LatLng", pk.getLocationFromAddress(ParkingSpotActivity.this));
             goToMap.putExtra("St Address", pk.getStAddress() + "," + pk.getCity() + "," + pk.getState());
             startActivity(goToMap);
+        }
+        else if (v == bRent){
+
+        }
+        else if(v == bReview){
+            Intent review = new Intent(ParkingSpotActivity.this, ReviewActivity.class);
+            review.putExtra("userId", userID);
+            review.putExtra("parkingID", pSpotID);
         }
      }
 }
