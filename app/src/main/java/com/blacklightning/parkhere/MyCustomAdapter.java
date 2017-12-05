@@ -89,7 +89,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter{
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String dParkingID = parkingIDList.get(position) ;
                 ListofParkingSpotOwned.deleteEntry(parkingIDList.get(position), userID);
                 parkingList.remove(position);
                 parkingIDList.remove(position);//or some other task
@@ -99,7 +98,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter{
         editBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 Intent editParkingSpot = new Intent(context, EditParkingSpotActivity.class);
                 editParkingSpot.putExtra("userID", userID);
                 String parkingSpotID = parkingIDList.get(position);

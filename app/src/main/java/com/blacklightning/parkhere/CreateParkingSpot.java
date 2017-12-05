@@ -48,9 +48,6 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
     Calendar mcurrentTime;
     Date startDate, endDate;
 
-    public CreateParkingSpot(){
-
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,12 +99,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         createSpot();
         return true;
     }
-    public Date getStartDate(){
-        return startDate;
-    }
-    public Date getEndDate(){
-        return endDate;
-    }
+
     public boolean createSpot() {
         String stAddress = etStAddress.getText().toString().trim();
         String City = etCity.getText().toString().trim();
@@ -287,37 +279,7 @@ public class CreateParkingSpot extends AppCompatActivity implements View.OnClick
         }
 
     }
-    public void setEtStAddress(String eta){
-        etStAddress.setText(eta);
-    }
-    public void setEtCity(String etc){
-        etCity.setText(etc);
-    }
-    public void setEtState(String ets){
-        etState.setText(ets);
-    }
-    public void setEtZipCode(String etz){
-        etZipCode.setText(etz);
-    }
-    public void setEtRate(String etr){
-        etZipCode.setText(etr);
-    }
-    public void setTvTimeStart(String tvts){
-        etZipCode.setText(tvts);
-    }
-    public void setTvTimeEnd(String tvte){
-        etZipCode.setText(tvte);
-    }
-    public void setTvDateStart(String tvds){
-        etZipCode.setText(tvds);
-    }
-    public void setTvDateEnd(String tvde){
-        etZipCode.setText(tvde);
-    }
-    public void setCalendarStartDate(int year, int month, int day){
-        mcurrentTime = Calendar.getInstance();
-        mcurrentTime.set(year,month,day,0,0);
-    }
+
     public boolean checkCalendarDate(Date startdate, Date enddate){
         return startdate.before(enddate);
     }

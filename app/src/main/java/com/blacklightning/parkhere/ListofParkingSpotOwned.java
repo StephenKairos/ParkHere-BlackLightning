@@ -111,8 +111,5 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
             });
         }
     }
-    public void editEntry(String parkingID){
-
-    }
 
 }
