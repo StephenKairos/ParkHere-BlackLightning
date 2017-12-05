@@ -20,12 +20,17 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditParkingSpotActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,9 +38,10 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference mDB;
     private FirebaseUser currentUser;
+    private String stAddress, city, state, zipCode, rate, timeStart, timeEnd, dateStart, dateEnd;
 
     private String currentSpotID;
-    Button bCreate;
+    Button bSubmit;
     EditText etStAddress;
     EditText etCity;
     EditText etState;
@@ -51,20 +57,20 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_parking_spot);
+        setContentView(R.layout.activity_edit_parking_spot);
 
-        etStAddress = (EditText) findViewById(R.id.StreetAddress);
-        etCity = (EditText) findViewById(R.id.City);
-        etState = (EditText) findViewById(R.id.State);
-        etZipCode = (EditText) findViewById(R.id.ZipCode);
-        etRate = (EditText) findViewById(R.id.HourlyRate);
-        tvTimeStart = (TextView) findViewById(R.id.startTime);
-        tvTimeEnd = (TextView)findViewById(R.id.endTime);
-        tvDateStart = (TextView) findViewById(R.id.startDate);
-        tvDateEnd = (TextView) findViewById(R.id.endDate);
-        bCreate = (Button) findViewById(R.id.CreateParkingButton);
+        etStAddress = (EditText) findViewById(R.id.EditStreetAddress);
+        etCity = (EditText) findViewById(R.id.EditCity);
+        etState = (EditText) findViewById(R.id.EditState);
+        etZipCode = (EditText) findViewById(R.id.EditZipCode);
+        etRate = (EditText) findViewById(R.id.EditHourlyRate);
+        tvTimeStart = (TextView) findViewById(R.id.EditStartTime);
+        tvTimeEnd = (TextView)findViewById(R.id.EditEndTime);
+        tvDateStart = (TextView) findViewById(R.id.EditStartDate);
+        tvDateEnd = (TextView) findViewById(R.id.EditEndDate);
+        bSubmit = (Button) findViewById(R.id.EditSubmitButton);
 
-        mDB = FirebaseDatabase.getInstance().getReference();
+        mDB = FirebaseDatabase.getInstance().getReference("parkingspot");
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
@@ -72,23 +78,55 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
         tvTimeEnd.setOnClickListener(this);
         tvDateStart.setOnClickListener(this);
         tvDateEnd.setOnClickListener(this);
+        Intent intent = getIntent();
+        final String userID = intent.getStringExtra("userID");
+        final String parkingID = intent.getStringExtra("parkingID");
 
-
-
-        bCreate.setOnClickListener(new View.OnClickListener() {
+        mDB.child(userID).child(parkingID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                boolean createdBool =editParkingSpot();
-                if(createdBool && createSpot()){
-                    Intent CreatePSIntent = new Intent(EditParkingSpotActivity.this, ParkingSpotActivity.class);
-                    CreatePSIntent.putExtra("pSpotID", currentSpotID);
-                    CreatePSIntent.putExtra("userID", currentUser.getUid());
-                    startActivity(CreatePSIntent);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap space = (HashMap)dataSnapshot.getValue();
+                city = space.get("city").toString();
+                stAddress = space.get("stAddress").toString();
+                dateStart = space.get("startDate").toString();
+                dateEnd = space.get("endDate").toString();
+                timeStart = space.get("startTime").toString();
+                timeEnd = space.get("endTime").toString();
+                rate = space.get("rate").toString();
+                zipCode = space.get("zip").toString();
+                state = space.get("state").toString();
+
+                mDB.child(userID).child(parkingID).updateChildren(space);
+                etStAddress.setText(stAddress);
+                etState.setText(state);
+                etCity.setText(city);
+                etRate.setText(rate);
+                etZipCode.setText(zipCode);
+            //    tvDateEnd.setText(dateEnd);
+            //    tvDateStart.setText(dateStart);
+            //    tvTimeStart.setText(timeStart);
+            //    tvTimeEnd.setText(timeEnd);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        bSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean editBool =editParkingSpot();
+                if(editBool && editSpot()){
+                    Intent EditPSIntent = new Intent(EditParkingSpotActivity.this, ParkingSpotActivity.class);
+                    EditPSIntent.putExtra("pSpotID", currentSpotID);
+                    EditPSIntent.putExtra("userID", currentUser.getUid());
+                    startActivity(EditPSIntent);
                     finish();
                 }
                 else{
 
                 }
+
             }
         });
     }
@@ -98,22 +136,14 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
             return false;
         }
         currentUser = firebaseAuth.getCurrentUser();
-        createSpot();
+        editSpot();
         return true;
     }
 
-    public boolean createSpot() {
-        String stAddress = etStAddress.getText().toString().trim();
-        String City = etCity.getText().toString().trim();
-        String State = etState.getText().toString().trim();
-        int ZipCode = Integer.parseInt(etZipCode.getText().toString().trim());
-        double rate = Double.parseDouble(etRate.getText().toString().trim());
-        String startDate = tvDateStart.getText().toString().trim();
-        String endDate = tvDateEnd.getText().toString().trim();
-        String startTime = tvTimeStart.getText().toString().trim();
-        String endTime = tvTimeEnd.getText().toString().trim();
-        ParkingSpace parkingSpace = new ParkingSpace(stAddress, City, State, ZipCode, rate,
-                startDate, endDate,startTime,endTime);
+    public boolean editSpot() {
+        ParkingSpace parkingSpace = new ParkingSpace(stAddress, city, state,
+                Integer.parseInt(zipCode), Double.parseDouble(rate),
+                dateStart, dateEnd,timeStart,timeEnd);
         LatLng test = parkingSpace.getLocationFromAddress(this);
         if(test == null){
             Toast.makeText(this, "Address is not REAL",Toast.LENGTH_LONG).show();
@@ -280,9 +310,6 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
             mTimePicker.show();
         }
 
-    }
-    public boolean checkCalendarDate(Date startdate, Date enddate){
-        return startdate.before(enddate);
     }
 
 }

@@ -101,7 +101,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter{
                 Intent editParkingSpot = new Intent(context, EditParkingSpotActivity.class);
                 editParkingSpot.putExtra("userID", userID);
                 String parkingSpotID = parkingIDList.get(position);
-                editParkingSpot.putExtra("pSpotID",parkingSpotID);
+                editParkingSpot.putExtra("parkingID",parkingSpotID);
                 context.startActivity(editParkingSpot);
                 notifyDataSetChanged();
             }
