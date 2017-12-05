@@ -11,9 +11,13 @@ import android.widget.Button;
 
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
-import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by Jason Liu on 12/3/2017.
@@ -24,7 +28,9 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter{
     private ArrayList<String> parkingIDList = new ArrayList<String>();
     private String userID ;
     private Context context;
-
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
+    private DatabaseReference mDB;
 
 
     public MyCustomAdapter(ArrayList<String> parkinglist,ArrayList<String> parkingIDlist, String userid, Context context) {
@@ -32,6 +38,11 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter{
         this.parkingIDList = parkingIDlist;
         this.userID=userid;
         this.context = context;
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mDB = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -67,31 +78,33 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter{
         listItemText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int j = 0; j < parkingList.size(); j++){
-                    if(parkingList.get(j).equals(listItemText.getText().toString())){
-                        Intent ownedParkingSpot = new Intent(context, ParkingSpotActivity.class);
-                        ownedParkingSpot.putExtra("userID", userID);
-                        String parkingSpotID = parkingIDList.get(j);
-                        ownedParkingSpot.putExtra("pSpotID", parkingSpotID);
-                        context.startActivity(ownedParkingSpot);
-                    }
-                }
+                Intent ownedParkingSpot = new Intent(context, ParkingSpotActivity.class);
+                ownedParkingSpot.putExtra("userID", userID);
+                String parkingSpotID = parkingIDList.get(position);
+                ownedParkingSpot.putExtra("pSpotID",parkingSpotID);
+                context.startActivity(ownedParkingSpot);
             }
         });
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
-                parkingList.remove(position); //or some other task
+                String dParkingID = parkingIDList.get(position) ;
+                ListofParkingSpotOwned.deleteEntry(parkingIDList.get(position), userID);
+                parkingList.remove(position);
+                parkingIDList.remove(position);//or some other task
                 notifyDataSetChanged();
             }
         });
         editBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
 
+                Intent editParkingSpot = new Intent(context, EditParkingSpotActivity.class);
+                editParkingSpot.putExtra("userID", userID);
+                String parkingSpotID = parkingIDList.get(position);
+                editParkingSpot.putExtra("pSpotID",parkingSpotID);
+                context.startActivity(editParkingSpot);
                 notifyDataSetChanged();
             }
         });

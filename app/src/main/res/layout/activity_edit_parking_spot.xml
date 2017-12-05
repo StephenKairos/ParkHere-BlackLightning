@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/EditParkingSpot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Edit Parking Spot"
+                android:textSize="30dp" />
+
+            <EditText
+                android:id="@+id/EditStreetAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Street Address"
+                android:inputType="textPostalAddress" />
+
+            <EditText
+                android:id="@+id/EditCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="City" />
+
+            <EditText
+                android:id="@+id/EditState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="State/Province/Region" />
+
+            <EditText
+                android:id="@+id/EditZipCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:layout_marginBottom="10dp"
+                android:hint="Zip Code" />
+
+            <EditText
+                android:id="@+id/EditHourlyRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Hourly Rate"
+                android:inputType="numberDecimal" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date" />
+
+            <TextView
+                android:id="@+id/EditStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Select Start Date"
+                android:layout_marginBottom="10dp"
+                android:textSize="15dp"
+                android:inputType="date"
+                android:textColorHint="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Date" />
+
+            <TextView
+                android:id="@+id/EditEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Select End Date"
+                android:textSize="15dp"
+                android:inputType="date"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/colorAccent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Time" />
+
+            <TextView
+                android:id="@+id/EditStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="15dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Select Time"
+                android:inputType="time"
+                android:textColorHint="@color/colorAccent"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Time" />
+
+            <TextView
+                android:id="@+id/EditEndTime"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Select Time"
+                android:layout_marginBottom="10dp"
+                android:inputType="time"
+                android:textColorHint="@color/colorAccent"/>
+
+            <Button
+                android:id="@+id/EditSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
