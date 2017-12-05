@@ -31,7 +31,7 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authListener;
-    private DatabaseReference fBase;
+    private DatabaseReference mDB;
     private FirebaseUser currentUser;
 
     private String currentSpotID;
@@ -63,20 +63,22 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
         tvDateStart = (TextView) findViewById(R.id.startDate);
         tvDateEnd = (TextView) findViewById(R.id.endDate);
         bCreate = (Button) findViewById(R.id.CreateParkingButton);
-        
-        fBase = FirebaseDatabase.getInstance().getReference();
+
+        mDB = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
+
         tvTimeStart.setOnClickListener(this);
         tvTimeEnd.setOnClickListener(this);
         tvDateStart.setOnClickListener(this);
         tvDateEnd.setOnClickListener(this);
 
 
+
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean createdBool =createParkingSpot();
+                boolean createdBool =editParkingSpot();
                 if(createdBool && createSpot()){
                     Intent CreatePSIntent = new Intent(EditParkingSpotActivity.this, ParkingSpotActivity.class);
                     CreatePSIntent.putExtra("pSpotID", currentSpotID);
@@ -91,7 +93,7 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
         });
     }
 
-    private boolean createParkingSpot(){
+    private boolean editParkingSpot(){
         if(!checkField()){
             return false;
         }
@@ -99,12 +101,7 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
         createSpot();
         return true;
     }
-    public Date getStartDate(){
-        return startDate;
-    }
-    public Date getEndDate(){
-        return endDate;
-    }
+
     public boolean createSpot() {
         String stAddress = etStAddress.getText().toString().trim();
         String City = etCity.getText().toString().trim();
@@ -124,8 +121,8 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
         }
         else {
             String parkingID = parkingSpace.getId();
-            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
-            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
+            mDB.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
+            mDB.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
             currentSpotID=parkingID;
         }
         return true;
