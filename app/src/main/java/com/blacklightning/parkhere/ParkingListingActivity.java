@@ -86,6 +86,8 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 String city = spaceItem.child("city").getValue().toString();
                                 String state = spaceItem.child("state").getValue().toString();
 
+                                int counter = (int) spaceItem.child("counter").getValue();
+
                                 String latlngAddress = stAddress + ", " + city + ", " + state;
                                 Context context = ParkingListingActivity.this;
 
@@ -94,7 +96,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                     List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
                                     if(coordinateList.size()>0) {
                                         Address coor = coordinateList.get(0);
-                                        ParkingItem entry = new ParkingItem(user.getKey(), spaceItem.child("id").getValue().toString(), coor);
+                                        ParkingItem entry = new ParkingItem(user.getKey(), spaceItem.child("id").getValue().toString(), coor, counter);
                                         listings.add(entry);
 
                                     }
@@ -202,9 +204,11 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                             public View getView(int position, View convertView, ViewGroup parent) {
                                 View v= super.getView(position, convertView, parent);
 
-                                int colorValue = 0;
+                                int currentCounter = filteredListings.get(position).getCounter();
 
-                                v.setBackgroundColor(Color.rgb(COLOR_CONSTANT * position, COLOR_CONSTANT * position, COLOR_CONSTANT * position));
+                                int colorValue = COLOR_CONSTANT * currentCounter;
+
+                                v.setBackgroundColor(Color.rgb(colorValue, colorValue, colorValue));
                                 return v;
                             }
                         };
@@ -231,15 +235,18 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         private String userID;
         private String parkingID;
         private Address addr;
+        private int counter;
 
-        public ParkingItem(String userID, String id, Address addr) {
+        public ParkingItem(String userID, String id, Address addr, int counter) {
             this.userID = userID;
             this.parkingID = id;
             this.addr = addr;
+            this.counter = counter;
         }
 
         public String getID() { return parkingID; }
         public String getUserID() { return userID; }
         public Address getAddress() { return addr; }
+        public int getCounter() { return counter; }
     }
 }
