@@ -54,8 +54,9 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
          pSpotID = intent.getStringExtra("pSpotID");
          userID = intent.getStringExtra("userID");
 
-         Log.d("Parking Spot ID", pSpotID);
-         Log.d("User ID", userID);
+         String testCheck = userID + ": " + pSpotID;
+
+         Log.d("UserAndParkingInternal", testCheck);
 
          setContentView(R.layout.activity_parking_spot);
 

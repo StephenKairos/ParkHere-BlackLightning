@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +27,8 @@ import java.util.List;
 public class ListofParkingSpotRented extends AppCompatActivity {
 
     private ArrayList<String> listings;
+    private ArrayList<IDContainer> idListings;
+
     //private ArrayList<String> parkingIDArrayList;
     private DataSnapshot parkingSpotList;
     ArrayAdapter<String> listAdapter;
@@ -36,6 +39,7 @@ public class ListofParkingSpotRented extends AppCompatActivity {
     private static FirebaseUser currentUser;
     private static DatabaseReference mDB;
     private String parkingUserID;
+    private String parkingID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class ListofParkingSpotRented extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.rentedList);
         listings = new ArrayList<>();
+        idListings = new ArrayList<>();
         parkingIDArrayList = new ArrayList<>();
         if(currentUser != null){
             System.out.println("Able to run");
@@ -59,8 +64,15 @@ public class ListofParkingSpotRented extends AppCompatActivity {
 
                     parkingSpotList = dataSnapshot;
                     for(DataSnapshot spaceItem : parkingSpotList.getChildren()){
-                        final String parkingID = spaceItem.child("id").getValue().toString();
+                        parkingID = spaceItem.child("id").getValue().toString();
                         parkingUserID = spaceItem.child("userId").getValue().toString();
+
+                        String testCheck = parkingUserID + ": " + parkingID;
+
+                        IDContainer container = new IDContainer(parkingUserID, parkingID);
+                        idListings.add(container);
+
+                        Log.d("UserAndParking", testCheck);
 
                         DatabaseReference toParking = mDB.child("parkingspot").child(parkingUserID).child(parkingID);
                         toParking.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,6 +95,7 @@ public class ListofParkingSpotRented extends AppCompatActivity {
                                         System.out.println("Length: " + coordinateList.size());
                                         Address coor = coordinateList.get(0);
                                         listings.add(latlngAddress);
+
                                         System.out.println("Length listings 2: " + listings.size());
                                     }
                                 } catch (IOException e) {
@@ -118,19 +131,40 @@ public class ListofParkingSpotRented extends AppCompatActivity {
             String selection = listAdapter.getItem(i);
             System.out.println("Address Rented: " + selection);
 
+            for(int x = 0; x < idListings.size(); x++) {
+                String testCheck = idListings.get(i).getUserID() + ": " + idListings.get(i).getID();
+
+                Log.d("IDArray", testCheck);
+            }
+
             System.out.println("Length ParkingID: " + parkingIDArrayList.size());
             for(int j = 0; j < listings.size(); j++){
                 if(listings.get(j).equals(selection)){
                     Intent ownedParkingSpot = new Intent(ListofParkingSpotRented.this, ParkingSpotActivity.class);
 
-                    ownedParkingSpot.putExtra("userID", parkingUserID);
+                    ownedParkingSpot.putExtra("userID", idListings.get(j).getUserID());
                     String parkingSpotID = parkingIDArrayList.get(j);
-                    ownedParkingSpot.putExtra("pSpotID", parkingSpotID);
+
+                    ownedParkingSpot.putExtra("pSpotID", idListings.get(j).getID());
                     startActivity(ownedParkingSpot);
                 }
             }
         }
     });
 
+    }
+
+    public class IDContainer {
+
+        private String userID;
+        private String parkingID;
+
+        public IDContainer(String userID, String id) {
+            this.userID = userID;
+            this.parkingID = id;
+        }
+
+        public String getID() { return parkingID; }
+        public String getUserID() { return userID; }
     }
 }

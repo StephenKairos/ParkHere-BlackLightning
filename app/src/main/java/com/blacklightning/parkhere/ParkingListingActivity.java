@@ -121,15 +121,9 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                 String selection = listAdapter.getItem(i);
                 ParkingItem pItem = null;
 
-                Log.d("Selection", selection);
-
                 for(ParkingItem item : filteredListings) {
 
                     Log.d("Current ID", item.getUserID());
-
-                    if(item.getID() == null) {
-                        System.out.println("fucking failed");
-                    }
 
                     if(item.getAddress().getAddressLine(0).equals(selection)) {
 
@@ -202,13 +196,19 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                         listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings) {
                             @Override
                             public View getView(int position, View convertView, ViewGroup parent) {
-                                View v= super.getView(position, convertView, parent);
+                                View v = super.getView(position, convertView, parent);
+                                TextView tv = (TextView) v.findViewById(android.R.id.text1);
 
                                 int currentCounter = filteredListings.get(position).getCounter();
 
-                                int colorValue = COLOR_CONSTANT * currentCounter;
+                                int colorValue = COLOR_CONSTANT * (COLOR_CONSTANT - currentCounter);
+
+                                if(colorValue < 127) { // If the background color is darker than the middle threshold
+                                    tv.setTextColor(Color.WHITE);
+                                }
 
                                 v.setBackgroundColor(Color.rgb(colorValue, colorValue, colorValue));
+
                                 return v;
                             }
                         };
@@ -230,23 +230,23 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
         }
     }
 
-    public class ParkingItem {
+        public class ParkingItem {
 
-        private String userID;
-        private String parkingID;
-        private Address addr;
-        private int counter;
+            private String userID;
+            private String parkingID;
+            private Address addr;
+            private int counter;
 
-        public ParkingItem(String userID, String id, Address addr, int counter) {
-            this.userID = userID;
-            this.parkingID = id;
-            this.addr = addr;
-            this.counter = counter;
+            public ParkingItem(String userID, String id, Address addr, int counter) {
+                this.userID = userID;
+                this.parkingID = id;
+                this.addr = addr;
+                this.counter = counter;
+            }
+
+            public String getID() { return parkingID; }
+            public String getUserID() { return userID; }
+            public Address getAddress() { return addr; }
+            public int getCounter() { return counter; }
         }
-
-        public String getID() { return parkingID; }
-        public String getUserID() { return userID; }
-        public Address getAddress() { return addr; }
-        public int getCounter() { return counter; }
-    }
 }
