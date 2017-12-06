@@ -39,8 +39,8 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
         Bundle extra = getIntent().getExtras();
         userID = extra.getString("userId");
-        pSpotID =extra.getString("parkingID");
-        concatenate = currentUser + pSpotID;
+        pSpotID = extra.getString("parkingID");
+        concatenate = currentUser.getUid() + pSpotID;
         rating = (EditText) findViewById(R.id.intRate);
         review = (EditText) findViewById(R.id.Description);
         bSubmit = (Button) findViewById(R.id.Submit);
@@ -50,8 +50,8 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                DatabaseReference ref = mDB.child("parkingspot").child(userID).child(pSpotID).child("ratings").child(concatenate);
-               ref.child("rating").setValue(rating.getText());
-               ref.child("review").setValue(review.getText());
+               ref.child("rating").setValue(rating.getText().toString());
+               ref.child("review").setValue(review.getText().toString());
             }
         });
 
