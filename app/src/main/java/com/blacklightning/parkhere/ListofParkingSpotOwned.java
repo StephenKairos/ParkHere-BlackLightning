@@ -58,20 +58,20 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                     parkingSpotList = dataSnapshot;
                     for (DataSnapshot spaceItem : parkingSpotList.getChildren()) {
                         parkingID.add(spaceItem.getKey().toString());
-                        System.out.println("Parking ID in DB: " + spaceItem.getKey().toString());
+                        //System.out.println("Parking ID in DB: " + spaceItem.getKey().toString());
                         String stAddress = spaceItem.child("stAddress").getValue().toString();
                         String city = spaceItem.child("city").getValue().toString();
                         String state = spaceItem.child("state").getValue().toString();
 
                         String latlngAddress = stAddress + ", " + city + ", " + state;
                         Context context = ListofParkingSpotOwned.this;
-                        System.out.println("Fuck: " + latlngAddress);
+                        //System.out.println("Fuck: " + latlngAddress);
                         Geocoder geocoder = new Geocoder(context);
 
                         try {
                             List<Address> coordinateList = geocoder.getFromLocationName(latlngAddress, 5);
                             if (coordinateList.size() > 0) {
-                                System.out.println("Length: " + coordinateList.size());
+                                //System.out.println("Length: " + coordinateList.size());
                                 Address coor = coordinateList.get(0);
                                 listings.add(latlngAddress);
                             }
@@ -79,7 +79,7 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    System.out.println("Length listings: " + listings.size());
+                    //System.out.println("Length listings: " + listings.size());
                     listAdapter = new ArrayAdapter<>(ListofParkingSpotOwned.this, android.R.layout.simple_list_item_1, listings);
                     MyCustomAdapter customAdapter = new MyCustomAdapter(listings, parkingID, userID, ListofParkingSpotOwned.this);
                     listView.setAdapter(customAdapter);

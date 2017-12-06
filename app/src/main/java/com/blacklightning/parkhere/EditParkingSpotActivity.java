@@ -53,6 +53,8 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
     TextView tvDateEnd;
     Calendar mcurrentTime;
     Date startDate, endDate;
+    String userID;
+    String parkingID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,8 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
         tvDateStart.setOnClickListener(this);
         tvDateEnd.setOnClickListener(this);
         Intent intent = getIntent();
-        final String userID = intent.getStringExtra("userID");
-        final String parkingID = intent.getStringExtra("parkingID");
+        userID = intent.getStringExtra("userID");
+        parkingID = intent.getStringExtra("parkingID");
 
         mDB.child(userID).child(parkingID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -96,7 +98,6 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
                 zipCode = space.get("zip").toString();
                 state = space.get("state").toString();
 
-                mDB.child(userID).child(parkingID).updateChildren(space);
                 etStAddress.setText(stAddress);
                 etState.setText(state);
                 etCity.setText(city);
@@ -118,8 +119,8 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
                 boolean editBool =editParkingSpot();
                 if(editBool && editSpot()){
                     Intent EditPSIntent = new Intent(EditParkingSpotActivity.this, ParkingSpotActivity.class);
-                    EditPSIntent.putExtra("pSpotID", currentSpotID);
-                    EditPSIntent.putExtra("userID", currentUser.getUid());
+                    EditPSIntent.putExtra("pSpotID", parkingID);
+                    EditPSIntent.putExtra("userID", userID);
                     startActivity(EditPSIntent);
                     finish();
                 }
@@ -150,10 +151,10 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
             return false;
         }
         else {
-            String parkingID = parkingSpace.getId();
-            mDB.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
-            mDB.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
-            currentSpotID=parkingID;
+            //mDB.child(userID).child(parkingID).setValue(parkingSpace);
+            System.out.println(parkingSpace.getStartDate());
+            mDB.child(userID).child(parkingID).child("counter").setValue(0);
+            mDB.child(userID).child(parkingID).setValue(parkingSpace);
         }
         return true;
     }
@@ -164,61 +165,61 @@ public class EditParkingSpotActivity extends AppCompatActivity implements View.O
      */
     public boolean checkField(){
         boolean clear = true;
-        String stAddress = etStAddress.getText().toString().trim();
-        String City = etCity.getText().toString().trim();
-        String State = etState.getText().toString().trim();
-        String ZipCode =etZipCode.getText().toString().trim();
-        String Rate = etRate.getText().toString().trim();
-        String StartDate = tvDateStart.getText().toString().trim();
-        String EndDate = tvDateEnd.getText().toString().trim();
-        String StartTime = tvTimeStart.getText().toString().trim();
-        String EndTime = tvTimeEnd.getText().toString().trim();
+        stAddress = etStAddress.getText().toString().trim();
+        city = etCity.getText().toString().trim();
+        state = etState.getText().toString().trim();
+        zipCode =etZipCode.getText().toString().trim();
+        rate = etRate.getText().toString().trim();
+        dateStart = tvDateStart.getText().toString().trim();
+        dateEnd = tvDateEnd.getText().toString().trim();
+        timeStart = tvTimeStart.getText().toString().trim();
+        timeEnd = tvTimeEnd.getText().toString().trim();
         if(TextUtils.isEmpty(stAddress)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing Street Address",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(City)){
+        if(TextUtils.isEmpty(city)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing City",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(State)){
+        if(TextUtils.isEmpty(state)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing State",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(ZipCode)){
+        if(TextUtils.isEmpty(zipCode)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(!ZipCode.matches("\\d+")){
+        if(!zipCode.matches("\\d+")){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Zip Code must be Numeric",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(Rate)){
+        if(TextUtils.isEmpty(rate)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing Hourly Rate",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(StartDate)){
+        if(TextUtils.isEmpty(dateStart)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing Start Date",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(EndDate)){
+        if(TextUtils.isEmpty(dateEnd)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing End Date",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(StartTime)){
+        if(TextUtils.isEmpty(timeStart)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing Start Time",Toast.LENGTH_LONG ).show();
             return clear;
         }
-        if(TextUtils.isEmpty(EndTime)){
+        if(TextUtils.isEmpty(timeEnd)){
             clear = false;
             Toast.makeText(EditParkingSpotActivity.this, "Missing End Time",Toast.LENGTH_LONG ).show();
             return clear;
