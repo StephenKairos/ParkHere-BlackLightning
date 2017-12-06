@@ -86,7 +86,6 @@ public class ListofParkingSpotRented extends AppCompatActivity {
                                 String latlngAddress = stAddress + ", " + city + ", " + state;
 
                                 Context context = ListofParkingSpotRented.this;
-                                System.out.println("Fuck 2: " + latlngAddress);
                                 Geocoder geocoder = new Geocoder(context);
 
                                 try {
