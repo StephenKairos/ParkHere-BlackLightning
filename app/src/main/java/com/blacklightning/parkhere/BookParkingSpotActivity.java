@@ -42,7 +42,7 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_parking_spot);
+        setContentView(R.layout.activity_rent_parking_spot);
 
         Bundle extra = getIntent().getExtras();
         userID = extra.getString("userID");
@@ -68,10 +68,8 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
             public void onClick(View v) {
                 boolean createdBool = createParkingSpot();
                 if(createdBool && bookSpot()){
-                    Intent CreatePSIntent = new Intent(BookParkingSpotActivity.this, ParkingSpotActivity.class);
-                    CreatePSIntent.putExtra("pSpotID", currentSpotID);
-                    CreatePSIntent.putExtra("userID", currentUser.getUid());
-                    startActivity(CreatePSIntent);
+                    Intent profileIntent = new Intent(BookParkingSpotActivity.this, ProfileActivity.class);
+                    startActivity(profileIntent);
                     finish();
                 }
                 else{
@@ -97,7 +95,7 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
         String endTime = tvTimeEnd.getText().toString().trim();
 
         //fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).setValue(parkingSpace);
-        fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("counter").setValue(0);
+        fBase.child("parkingspot").child(userID).child(pSpotID).child("counter").setValue(0);
         currentSpotID = pSpotID;
         return true;
 
