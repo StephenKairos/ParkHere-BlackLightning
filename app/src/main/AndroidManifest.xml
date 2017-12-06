@@ -36,6 +36,7 @@
         <activity android:name=".ParkingSpotActivity" />
         <activity android:name=".ParkingListingActivity" />
         <activity android:name=".EditParkingSpotActivity" />
+        <activity android:name=".BookParkingSpotActivity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CreateParkingSpot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Book this Parking Spot"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date" />
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Select Start Date"
+                android:layout_marginBottom="10dp"
+                android:textSize="15dp"
+                android:inputType="date"
+                android:textColorHint="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Date" />
+
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Select End Date"
+                android:textSize="15dp"
+                android:inputType="date"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/colorAccent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Time" />
+
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="15dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Select Time"
+                android:inputType="time"
+                android:textColorHint="@color/colorAccent"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Time" />
+
+            <TextView
+                android:id="@+id/endTime"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Select Time"
+                android:layout_marginBottom="10dp"
+                android:inputType="time"
+                android:textColorHint="@color/colorAccent"/>
+
+            <Button
+                android:id="@+id/CreateParkingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CREATE" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
