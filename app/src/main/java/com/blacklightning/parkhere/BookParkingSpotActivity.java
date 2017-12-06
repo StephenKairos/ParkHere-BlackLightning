@@ -96,17 +96,18 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
         String endTime = tvTimeEnd.getText().toString().trim();
 
         //fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).setValue(parkingSpace);
-        fBase.child("parkingspot").child(userID).child(pSpotID).child("counter").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                long counter = (long) dataSnapshot.getValue();
-                counter += 1;
-                dataSnapshot.getRef().setValue(counter);
-            }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-            }
-        });
+
+//        fBase.child("parkingspot").child(userID).child(pSpotID).child("counter").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                long counter = (long) dataSnapshot.getValue();
+//                counter += 1;
+//                dataSnapshot.getRef().setValue(counter);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError firebaseError) {
+//            }
+//        });
 
         fBase.child("users").child(currentUser.getUid()).child("rented").child(pSpotID).child("id").setValue(pSpotID);
         fBase.child("users").child(currentUser.getUid()).child("rented").child(pSpotID).child("userId").setValue(userID);

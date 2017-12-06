@@ -241,8 +241,8 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
         }
         else if (v == bRent){
             Intent bookSpot = new Intent(ParkingSpotActivity.this, BookParkingSpotActivity.class);
-            bookSpot.putExtra("userID", pSpotID);
-            bookSpot.putExtra("parkingID", userID);
+            bookSpot.putExtra("parkingID", pSpotID);
+            bookSpot.putExtra("userID", userID);
             startActivity(bookSpot);
         }
         else if(v == bReview){
