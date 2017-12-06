@@ -49,7 +49,8 @@ public class ListofParkingSpotRented extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         Intent intent = getIntent();
         mDB = FirebaseDatabase.getInstance().getReference();
-        userID = intent.getStringExtra("userID");
+        //userID = intent.getStringExtra("userID");
+        userID = currentUser.getUid();
 
         listView = (ListView) findViewById(R.id.rentedList);
         listings = new ArrayList<>();

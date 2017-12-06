@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +45,7 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_parking_spot);
+        setContentView(R.layout.activity_rent_parking_spot);
 
         Bundle extra = getIntent().getExtras();
         userID = extra.getString("userID");
@@ -68,10 +71,6 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
             public void onClick(View v) {
                 boolean createdBool = createParkingSpot();
                 if(createdBool && bookSpot()){
-                    Intent CreatePSIntent = new Intent(BookParkingSpotActivity.this, ParkingSpotActivity.class);
-                    CreatePSIntent.putExtra("pSpotID", currentSpotID);
-                    CreatePSIntent.putExtra("userID", currentUser.getUid());
-                    startActivity(CreatePSIntent);
                     finish();
                 }
                 else{
@@ -97,7 +96,21 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
         String endTime = tvTimeEnd.getText().toString().trim();
 
         //fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).setValue(parkingSpace);
-        fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("counter").setValue(0);
+
+//        fBase.child("parkingspot").child(userID).child(pSpotID).child("counter").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                long counter = (long) dataSnapshot.getValue();
+//                counter += 1;
+//                dataSnapshot.getRef().setValue(counter);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError firebaseError) {
+//            }
+//        });
+
+        fBase.child("users").child(currentUser.getUid()).child("rented").child(pSpotID).child("id").setValue(pSpotID);
+        fBase.child("users").child(currentUser.getUid()).child("rented").child(pSpotID).child("userId").setValue(userID);
         currentSpotID = pSpotID;
         return true;
 
