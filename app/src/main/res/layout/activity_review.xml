@@ -31,8 +31,8 @@
             android:id="@+id/Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button"
-            tools:text="Submit" />
+            android:text="Submit Review"
+            tools:text="Submit Review" />
 
         <ScrollView
             android:layout_width="match_parent"
