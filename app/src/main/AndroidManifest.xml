@@ -35,7 +35,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ParkingSpotActivity" />
         <activity android:name=".ParkingListingActivity" />
-        <activity android:name=".EditParkingSpotActivity"/>
+        <activity android:name=".EditParkingSpotActivity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -61,7 +61,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListofParkingSpotOwned" />
-        <activity android:name=".ListofParkingSpotRented"></activity>
+        <activity android:name=".ListofParkingSpotRented" />
+        <activity android:name=".ReviewActivity"></activity>
     </application>
 
 </manifest>
