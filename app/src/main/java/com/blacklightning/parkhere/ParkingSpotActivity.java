@@ -246,6 +246,7 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
             Intent review = new Intent(ParkingSpotActivity.this, ReviewActivity.class);
             review.putExtra("userId", userID);
             review.putExtra("parkingID", pSpotID);
+            startActivity(review);
         }
      }
 }
