@@ -240,11 +240,14 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
             startActivity(goToMap);
         }
         else if (v == bRent){
-
+            Intent bookSpot = new Intent(ParkingSpotActivity.this, BookParkingSpotActivity.class);
+            bookSpot.putExtra("userID", pSpotID);
+            bookSpot.putExtra("parkingID", userID);
+            startActivity(bookSpot);
         }
         else if(v == bReview){
             Intent review = new Intent(ParkingSpotActivity.this, ReviewActivity.class);
-            review.putExtra("userId", userID);
+            review.putExtra("userID", userID);
             review.putExtra("parkingID", pSpotID);
             startActivity(review);
         }

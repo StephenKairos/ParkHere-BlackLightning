@@ -30,13 +30,8 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
     private DatabaseReference fBase;
     private FirebaseUser currentUser;
 
-    private String currentSpotID;
+    private String userID, pSpotID, currentSpotID;
     Button bCreate;
-    EditText etStAddress;
-    EditText etCity;
-    EditText etState;
-    EditText etZipCode;
-    EditText etRate;
     TextView tvTimeStart;
     TextView tvTimeEnd;
     TextView tvDateStart;
@@ -49,11 +44,10 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_parking_spot);
 
-        etStAddress = (EditText) findViewById(R.id.StreetAddress);
-        etCity = (EditText) findViewById(R.id.City);
-        etState = (EditText) findViewById(R.id.State);
-        etZipCode = (EditText) findViewById(R.id.ZipCode);
-        etRate = (EditText) findViewById(R.id.HourlyRate);
+        Bundle extra = getIntent().getExtras();
+        userID = extra.getString("userID");
+        pSpotID = extra.getString("parkingID");
+
         tvTimeStart = (TextView) findViewById(R.id.startTime);
         tvTimeEnd = (TextView)findViewById(R.id.endTime);
         tvDateStart = (TextView) findViewById(R.id.startDate);
@@ -72,8 +66,8 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean createdBool =createParkingSpot();
-                if(createdBool && createSpot()){
+                boolean createdBool = createParkingSpot();
+                if(createdBool && bookSpot()){
                     Intent CreatePSIntent = new Intent(BookParkingSpotActivity.this, ParkingSpotActivity.class);
                     CreatePSIntent.putExtra("pSpotID", currentSpotID);
                     CreatePSIntent.putExtra("userID", currentUser.getUid());
@@ -92,34 +86,35 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
             return false;
         }
         currentUser = firebaseAuth.getCurrentUser();
-        createSpot();
+        bookSpot();
         return true;
     }
 
-    public boolean createSpot() {
-        String stAddress = etStAddress.getText().toString().trim();
-        String City = etCity.getText().toString().trim();
-        String State = etState.getText().toString().trim();
-        int ZipCode = Integer.parseInt(etZipCode.getText().toString().trim());
-        double rate = Double.parseDouble(etRate.getText().toString().trim());
+    public boolean bookSpot() {
         String startDate = tvDateStart.getText().toString().trim();
         String endDate = tvDateEnd.getText().toString().trim();
         String startTime = tvTimeStart.getText().toString().trim();
         String endTime = tvTimeEnd.getText().toString().trim();
-        ParkingSpace parkingSpace = new ParkingSpace(stAddress, City, State, ZipCode, rate,
-                startDate, endDate,startTime,endTime);
-        LatLng test = parkingSpace.getLocationFromAddress(this);
-        if(test == null){
-            Toast.makeText(this, "Address is not REAL",Toast.LENGTH_LONG).show();
-            return false;
-        }
-        else {
-            String parkingID = parkingSpace.getId();
-            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
-            fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
-            currentSpotID=parkingID;
-        }
+
+        //fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).setValue(parkingSpace);
+        fBase.child("parkingspot").child(currentUser.getUid()).child(pSpotID).child("counter").setValue(0);
+        currentSpotID = pSpotID;
         return true;
+
+//        ParkingSpace parkingSpace = new ParkingSpace(stAddress, City, State, ZipCode, rate,
+//                startDate, endDate,startTime,endTime);
+//        LatLng test = parkingSpace.getLocationFromAddress(this);
+//        if(test == null){
+//            Toast.makeText(this, "Address is not REAL",Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+//        else {
+//        String parkingID = parkingSpace.getId();
+//        fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).setValue(parkingSpace);
+//        fBase.child("parkingspot").child(currentUser.getUid()).child(parkingID).child("counter").setValue(0);
+//        currentSpotID=parkingID;
+//        }
+//        return true;
     }
 
     /**
@@ -128,45 +123,11 @@ public class BookParkingSpotActivity extends AppCompatActivity implements View.O
      */
     public boolean checkField(){
         boolean clear = true;
-        String stAddress = etStAddress.getText().toString().trim();
-        String City = etCity.getText().toString().trim();
-        String State = etState.getText().toString().trim();
-        String ZipCode =etZipCode.getText().toString().trim();
-        String Rate = etRate.getText().toString().trim();
         String StartDate = tvDateStart.getText().toString().trim();
         String EndDate = tvDateEnd.getText().toString().trim();
         String StartTime = tvTimeStart.getText().toString().trim();
         String EndTime = tvTimeEnd.getText().toString().trim();
-        if(TextUtils.isEmpty(stAddress)){
-            clear = false;
-            Toast.makeText(BookParkingSpotActivity.this, "Missing Street Address",Toast.LENGTH_LONG ).show();
-            return clear;
-        }
-        if(TextUtils.isEmpty(City)){
-            clear = false;
-            Toast.makeText(BookParkingSpotActivity.this, "Missing City",Toast.LENGTH_LONG ).show();
-            return clear;
-        }
-        if(TextUtils.isEmpty(State)){
-            clear = false;
-            Toast.makeText(BookParkingSpotActivity.this, "Missing State",Toast.LENGTH_LONG ).show();
-            return clear;
-        }
-        if(TextUtils.isEmpty(ZipCode)){
-            clear = false;
-            Toast.makeText(BookParkingSpotActivity.this, "Missing Zip Code",Toast.LENGTH_LONG ).show();
-            return clear;
-        }
-        if(!ZipCode.matches("\\d+")){
-            clear = false;
-            Toast.makeText(BookParkingSpotActivity.this, "Zip Code must be Numeric",Toast.LENGTH_LONG ).show();
-            return clear;
-        }
-        if(TextUtils.isEmpty(Rate)){
-            clear = false;
-            Toast.makeText(BookParkingSpotActivity.this, "Missing Hourly Rate",Toast.LENGTH_LONG ).show();
-            return clear;
-        }
+
         if(TextUtils.isEmpty(StartDate)){
             clear = false;
             Toast.makeText(BookParkingSpotActivity.this, "Missing Start Date",Toast.LENGTH_LONG ).show();

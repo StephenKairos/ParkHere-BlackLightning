@@ -38,7 +38,7 @@ public class ReviewActivity extends AppCompatActivity {
         mDB = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_review);
         Bundle extra = getIntent().getExtras();
-        userID = extra.getString("userId");
+        userID = extra.getString("userID");
         pSpotID = extra.getString("parkingID");
         concatenate = currentUser.getUid() + pSpotID;
         rating = (EditText) findViewById(R.id.intRate);
