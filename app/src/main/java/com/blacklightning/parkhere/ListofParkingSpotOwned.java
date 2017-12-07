@@ -38,7 +38,6 @@ public class ListofParkingSpotOwned extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listof_parking_spot_owned);
         Intent intent = getIntent();
