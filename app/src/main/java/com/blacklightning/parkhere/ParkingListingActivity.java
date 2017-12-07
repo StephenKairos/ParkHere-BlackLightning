@@ -86,7 +86,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 String city = spaceItem.child("city").getValue().toString();
                                 String state = spaceItem.child("state").getValue().toString();
 
-                                int counter = new Integer(spaceItem.child("counter").getValue().toString()).intValue();
+                                int counter = Integer.parseInt(spaceItem.child("counter").getValue().toString());
 
                                 String latlngAddress = stAddress + ", " + city + ", " + state;
                                 Context context = ParkingListingActivity.this;
@@ -200,12 +200,18 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
 
                                 int currentCounter = filteredListings.get(position).getCounter();
+                                String testColor = "Position: " + position + " Counter: " + currentCounter;
+                                Log.d("ColorAtPos", testColor);
 
                                 int colorValue = COLOR_CONSTANT * (COLOR_CONSTANT - currentCounter);
 
-                                if(colorValue < 127) { // If the background color is darker than the middle threshold
+                                if(colorValue < 0) { colorValue = 0; } else if(colorValue > 255) { colorValue = 255; }
+
+                                if(currentCounter >= COLOR_CONSTANT/2) { // If the background color is darker than the middle threshold
                                     tv.setTextColor(Color.WHITE);
                                 }
+
+
 
                                 v.setBackgroundColor(Color.rgb(colorValue, colorValue, colorValue));
 
