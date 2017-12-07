@@ -49,8 +49,6 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-
-
     public String getPhoneNumber() {
         return phoneNumber;
     }

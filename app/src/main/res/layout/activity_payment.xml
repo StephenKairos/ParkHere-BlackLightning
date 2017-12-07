@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blacklightning.parkhere.PaymentActivity">
+
+    <ImageView
+        android:id="@+id/Background"
+        android:layout_width="388dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/background"
+        tools:layout_editor_absoluteY="0dp"
+        android:contentDescription="Hi" />
+
+    <Button
+        android:id="@+id/Paypal"
+        android:layout_width="122dp"
+        android:layout_height="51dp"
+        android:clickable="true"
+        android:cursorVisible="true"
+        android:linksClickable="true"
+        android:onClick= "onClick"
+        android:text="PayPal"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="92dp" />
+
+    <Button
+        android:id="@+id/Craiglist"
+        android:layout_width="122dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:cursorVisible="true"
+        android:linksClickable="true"
+        android:onClick= "onClick"
+        android:text="Craiglist"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="163dp" />
+
+    <Button
+        android:id="@+id/Recurly"
+        android:layout_width="123dp"
+        android:layout_height="52dp"
+        android:clickable="true"
+        android:cursorVisible="true"
+        android:linksClickable="true"
+        android:onClick= "onClick"
+        android:text="Recurly"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="229dp" />
+
+    <Button
+        android:id="@+id/Venmo"
+        android:layout_width="122dp"
+        android:layout_height="46dp"
+        android:clickable="true"
+        android:cursorVisible="true"
+        android:linksClickable="true"
+        android:onClick= "onClick"
+        android:text="Venmo"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+</Button>
+
+

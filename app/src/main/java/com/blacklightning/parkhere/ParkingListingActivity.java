@@ -157,6 +157,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
+        final long startTime = System.currentTimeMillis();
         Log.d("TEST","Something Clicked");
 
         ListView parkingListings = (ListView) findViewById(R.id.parkingListings);
@@ -234,6 +235,9 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                 }
             }
         }
+        final long endTime = System.currentTimeMillis();
+
+        System.out.println("Total execution time: " + (endTime - startTime) );
     }
 
         public class ParkingItem {

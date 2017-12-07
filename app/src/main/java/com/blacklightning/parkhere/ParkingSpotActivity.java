@@ -76,7 +76,11 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
          pDateStart = (TextView) findViewById(R.id.pDateStart);
          pDateEnd = (TextView) findViewById(R.id.pDateEnd);
 
+
+
          if(currentUser != null) {
+             // Timer
+             final long startTime = System.currentTimeMillis();
 
              mDB.child("parkingspot").child(userID).child(pSpotID).child("stAddress").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
@@ -194,7 +198,11 @@ public class ParkingSpotActivity extends AppCompatActivity implements View.OnCli
 
                  }
              });
+             final long endTime = System.currentTimeMillis();
+
+             System.out.println("Total execution time: " + (endTime - startTime) );
          }
+
 
          bBackToList = (Button) findViewById(R.id.bParkingSpotReturn);
          bViewOnMap = (Button) findViewById(R.id.bViewSpotOnMap);
