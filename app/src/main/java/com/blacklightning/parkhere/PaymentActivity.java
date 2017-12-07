@@ -19,10 +19,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        payPal = (Button)findViewById(R.id.button);
-        venmo = (Button)findViewById(R.id.button_1);
-        craigList = (Button)findViewById(R.id.button_2);
-        recurly = (Button)findViewById(R.id.button_3);
+        payPal = (Button)findViewById(R.id.Paypal);
+        venmo = (Button)findViewById(R.id.Venmo);
+        craigList = (Button)findViewById(R.id.Craiglist);
+        recurly = (Button)findViewById(R.id.Recurly);
 
         payPal.setOnClickListener(this);
         venmo.setOnClickListener(this);
