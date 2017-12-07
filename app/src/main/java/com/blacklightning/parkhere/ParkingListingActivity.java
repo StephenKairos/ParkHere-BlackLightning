@@ -189,6 +189,7 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
                             if(distance <= MAX_DISTANCE) { // Filters listings closest to user's query (aka ZIP or Address)
                                 filteredListings.add(item);
                                 listStrings.add(item.getAddress().getAddressLine(0));
+                                Log.d("TestAddresses", item.getAddress().getAddressLine(0));
                             }
                         }
 
@@ -208,11 +209,14 @@ public class ParkingListingActivity extends AppCompatActivity implements View.On
 
                                 if(colorValue < 0) { colorValue = 0; } else if(colorValue > 255) { colorValue = 255; }
 
-                                if(currentCounter >= COLOR_CONSTANT/2) { // If the background color is darker than the middle threshold
+                                if(colorValue <= (COLOR_CONSTANT * COLOR_CONSTANT) / 2) { // If the background color is darker than the middle threshold
                                     tv.setTextColor(Color.WHITE);
+                                } else {
+                                    tv.setTextColor(Color.BLACK);
                                 }
 
-
+                                Log.d("BackgroundColor", Integer.toString(colorValue));
+                                Log.d("ColorText", tv.getText().toString());
 
                                 v.setBackgroundColor(Color.rgb(colorValue, colorValue, colorValue));
 
